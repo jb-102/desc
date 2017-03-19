@@ -136,7 +136,7 @@
     else
     {
 
-        $query = "SELECT * from tiles";
+        $query = "SELECT * from student_profile";
         $res = $conn -> query($query);
 
 

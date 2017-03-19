@@ -2,7 +2,7 @@
 	$servername = "localhost";
 	$username = "root";
 	$password = "";
-	$dbname = "cardpine";
+	$dbname = "desc";
 
 	// Create connection
 	$conn = new mysqli($servername, $username, $password, $dbname);
