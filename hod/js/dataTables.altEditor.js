@@ -33,14 +33,6 @@
   - Add/Edit/Delete functions.
 */
 
-var ajaxUrl;
-var count;
-var checkStudentUrl;
-var checkSectionUrl;
-var checkUrl;
-var success_message;
-var fail_message;
-
 (function( factory ){
   if ( typeof define === 'function' && define.amd ) {
         // AMD
@@ -188,20 +180,9 @@ var fail_message;
          if( this.s.dt.button('edit:name') )
          {
           this.s.dt.button('edit:name').action( function(e, dt, node, config) {
-
             var rows = dt.rows({
               selected: true
             }).count();
-
-            if (dt.context[0].ajax.url) 
-            {
-              ajaxUrl = dt.context[0].ajax.url;
-            }
-            else
-            {
-              ajaxUrl = dt.context[0].ajax;
-            }
-            count = 0;
 
             that._openEditModal();
           });
@@ -213,42 +194,7 @@ var fail_message;
               e.stopPropagation();
               that._editRowData();            
             }
-          }); 
-
-        }
-
-        // add Edit Button
-         if( this.s.dt.button('feedback:name') )
-         {
-          this.s.dt.button('feedback:name').action( function(e, dt, node, config) {
-
-            var rows = dt.rows({
-              selected: true
-            }).count();
-
-
-
-            if (dt.context[0].ajax.url) 
-            {
-              ajaxUrl = dt.context[0].ajax.url;
-            }
-            else
-            {
-              ajaxUrl = dt.context[0].ajax;
-            }
-            count = 0;
-
-            that._feedbackModal();
           });
-
-          $(document).on('click', '#feedbackBtn', function(e)
-          {
-            if(initValidation()){
-              e.preventDefault();
-              e.stopPropagation();
-              that._feedbackData();            
-            }
-          }); 
 
         }
 
@@ -259,16 +205,6 @@ var fail_message;
             var rows = dt.rows({
               selected: true
             }).count();
-
-            if (dt.context[0].ajax.url) 
-            {
-              ajaxUrl = dt.context[0].ajax.url;
-            }
-            else
-            {
-              ajaxUrl = dt.context[0].ajax;
-            }
-            count = 0;
 
             that._openDeleteModal();
           });
@@ -289,17 +225,6 @@ var fail_message;
             var rows = dt.rows({
               selected: true
             }).count();
-
-            if (dt.context[0].ajax.url) 
-            {
-              ajaxUrl = dt.context[0].ajax.url;
-            }
-            else
-            {
-              ajaxUrl = dt.context[0].ajax;
-            }
-
-            count = 0;
 
             that._openAddModal();
           });
@@ -341,164 +266,6 @@ var fail_message;
          } );
        },
 
-
-       /**
-        * Open feedback Modal for selected row
-        *
-        * @private
-        */
-        _feedbackModal: function ()
-        {
-         var that = this;
-         var dt = this.s.dt;
-         var columnDefs = [];
-
-         //Adding attribute IDs and values to object
-         for( var i = 0; i < dt.context[0].aoColumns.length; i++ )
-         {
-          columnDefs.push({ title: dt.context[0].aoColumns[i].sTitle,
-            name: dt.context[0].aoColumns[i].data
-          });
-        }
-        var adata = dt.rows({
-          selected: true
-        });
-
-        //Building feedback-modal
-        var data = "";
-
-        data += "<form id='altEditor-form-feedback' name='altEditor-form' role='form'>";
-
-        for(var j = 0; j < columnDefs.length; j++){
-
-          if (columnDefs[j].name.includes("student_id")) 
-          {
-            data += "<input  type='hidden'  id='" + columnDefs[j].title + "' name='" + columnDefs[j].name + "' placeholder='" + columnDefs[j].title + "' style='overflow:hidden'  class='form-control form-control-sm' value='" + adata.data()[0][columnDefs[j].name] + "' >";
-          }
-
-        }
-
-        if (dt.context[0].ajax.url == 'feedbackDAO.php')
-        {
-          data += "<div class='form-group'>"
-
-          data += "<div class='col-sm-5 col-md-5 col-lg-5 text-right' style='padding-top:4px;'>";
-              
-          data += "<label for=''>Subject:</label></div>";
-
-          data += "<div class='col-sm-6 col-md-6 col-lg-6'>";
-
-          data += "<select id='subject' style='overflow:hidden'  class='form-control form-control-sm'  name='subject' >" + subject_array + "</select>";
-          data += "<label style=' color: red;' id='subjectlabel" + "' hidden class='errorLabel'></label>";
-
-          data +="</div><div style='clear:both;'></div></div>";
-        }
-
-
-        else if (dt.context[0].ajax.url == 'academiaDAO.php') 
-        {
-          data += "<div class='form-group'>"
-
-          data += "<div class='col-sm-5 col-md-5 col-lg-5 text-right' style='padding-top:4px;'>";
-              
-          data += "<label for=''>Subject:</label></div>";
-
-          data += "<div class='col-sm-6 col-md-6 col-lg-6'>";
-
-          data += "<input type='text' readonly id='subject' value='" + mSubject + "' name='subject' style='overflow:hidden'  class='form-control form-control-sm'>";
-        
-          data +="</div><div style='clear:both;'></div></div>";
-        }
-
-
-        else if (dt.context[0].ajax.url == 'studentDAO.php') 
-        {
-          
-          data += "<div class='form-group'>"
-
-          data += "<div class='col-sm-5 col-md-5 col-lg-5 text-right' style='padding-top:4px;'>";
-              
-          data += "<label for=''>Roll No:</label></div>";
-
-          data += "<div class='col-sm-6 col-md-6 col-lg-6'>";
-
-          data += "<input type='text' readonly id='" + columnDefs[1].name + "' value='" + adata.data()[0][columnDefs[1].name] + "' name='" + columnDefs[1].name + "' style='overflow:hidden'  class='form-control form-control-sm'>";
-        
-          data +="</div><div style='clear:both;'></div></div>";
-
-
-
-          data += "<div class='form-group'>"
-
-          data += "<div class='col-sm-5 col-md-5 col-lg-5 text-right' style='padding-top:4px;'>";
-              
-          data += "<label for=''>Subject:</label></div>";
-
-          data += "<div class='col-sm-6 col-md-6 col-lg-6'>";
-
-          data += "<input type='text' readonly id='" + columnDefs[3].name + "' value='" + adata.data()[0][columnDefs[3].name] + "' name='" + columnDefs[3].name + "' style='overflow:hidden'  class='form-control form-control-sm'>";
-        
-          data +="</div><div style='clear:both;'></div></div>";          
-
-
-        }
-
-        data += "<div class='form-group'>"
-
-        data += "<div class='col-sm-5 col-md-5 col-lg-5 text-right' style='padding-top:4px;'>";
-            
-        data += "<label for=''>Message:</label></div>";
-
-        data += "<div class='col-sm-6 col-md-6 col-lg-6'>";
-
-        data += "<textarea  id='message'  pattern=''  title='' title  name='message' placeholder='' data-special='' data-errorMsg='' style='overflow:hidden'  class='form-control  form-control-sm' ></textarea>";
-        data += "<label style=' color: red;' id='messagelabel" + "' hidden class='errorLabel'></label>";
-
-        data +="</div><div style='clear:both;'></div></div>";
-
-        data += "</form>";
-
-        $('#altEditor-modal').on('show.bs.modal', function() {
-          if (dt.context[0].ajax.url == 'feedbackDAO.php')
-          {
-            $('#altEditor-modal').find('.modal-title').html('Send feedback');
-          }
-          else if (dt.context[0].ajax.url == 'academiaDAO.php') 
-          {
-            $('#altEditor-modal').find('.modal-title').html('Send Message');
-          }
-          else if (dt.context[0].ajax.url == 'studentDAO.php')
-          {
-            $('#altEditor-modal').find('.modal-title').html('Send Fee Status');
-          }
-          
-          
-          $('#altEditor-modal').find('.modal-body').html(data);
-          $('#altEditor-modal').find('.modal-footer').html("<button type='button' data-content='remove' class='btn btn-default' data-dismiss='modal'>Close</button>\
-           <button type='button' data-content='remove' class='btn btn-primary' id='feedbackBtn'>Send</button>");
-        });
-
-        $('#altEditor-modal').modal('show');
-        $('#altEditor-modal input[0]').focus();
-
-      },
-
-      _feedbackData: function( )
-      {
-          var that = this;
-
-          var form = $('form#altEditor-form-feedback')[0];
-          var formData = new FormData(form);
-          formData.append('action','send');
-
-          //Calling AJAX with data, tableObject, command.
-          updateJSON(formData, that, "feedback");
-
- },
-
-
-
-
        /**
         * Open Edit Modal for selected row
         * 
@@ -513,14 +280,12 @@ var fail_message;
     //Adding column attributes to object.
     //Assuming that the first defined column is ID - Therefore skipping that
     //and starting at index 1, because we dont wanna be able to change the ID.
-   for( var i = 0; i < dt.context[0].aoColumns.length; i++ )
+   for( var i = 1; i < dt.context[0].aoColumns.length; i++ )
    {
     columnDefs.push({ title: dt.context[0].aoColumns[i].sTitle,
       name: dt.context[0].aoColumns[i].data,
       type: dt.context[0].aoColumns[i].type,
       options: dt.context[0].aoColumns[i].options,
-      depends: dt.context[0].aoColumns[i].depends,
-      class: dt.context[0].aoColumns[i].class,
       msg: dt.context[0].aoColumns[i].errorMsg,
       hoverMsg: dt.context[0].aoColumns[i].hoverMsg,
       pattern: dt.context[0].aoColumns[i].pattern,
@@ -534,108 +299,45 @@ var fail_message;
           //Building edit-form
           var data = "";
 
-          var setDatepicker = 0;
-
-          data += '<form id="altEditor-form-edit" enctype="multipart/form-data" name="altEditor-form" role="form">';
+          data += "<form name='altEditor-form' role='form'>";
 
           for(var j = 0; j < columnDefs.length; j++){
+            data += "<div class='form-group'>"
+            data += "<div class='col-sm-5 col-md-5 col-lg-5 text-right' style='padding-top:4px;'>"
+            data += "<label for='" + columnDefs[j].title + "'>" + columnDefs[j].title + ":</label></div>"
+            data += "<div class='col-sm-6 col-md-6 col-lg-6'>";
 
-            if (!columnDefs[j].type.includes("readonly")) {
-
-              data += "<div class='form-group'>"
-
-              data += "<div class='col-sm-5 col-md-5 col-lg-5 text-right' style='padding-top:4px;'>";
-              
-              data += "<label for='" + columnDefs[j].name + "'>" + columnDefs[j].title + ":</label></div>";
-
-              data += "<div class='col-sm-6 col-md-6 col-lg-6'>";
-
-              //Adding text-inputs and errorlabels
-              if(columnDefs[j].type.includes("text")){
-
-                if (columnDefs[j].special && columnDefs[j].special.includes("noEdit")) 
-                {
-                  data += "<input readonly type='" + columnDefs[j].type + "' id='" + columnDefs[j].name + "'  pattern='" + columnDefs[j].pattern + "'  title='" + columnDefs[j].hoverMsg + "' title  name='" + columnDefs[j].name + "' placeholder='" + columnDefs[j].title + "' data-special='" + columnDefs[j].special + "' data-errorMsg='" + columnDefs[j].msg + "' style='overflow:hidden'  class='form-control  form-control-sm' value='" + adata.data()[0][columnDefs[j].name] + "'>";
-                  data += "<label style=' color: red;' id='" + columnDefs[j].name + "label" + "' hidden class='errorLabel'></label>";
-                }
-                else
-                {
-                  data += "<input type='" + columnDefs[j].type + "' id='" + columnDefs[j].name + "'  pattern='" + columnDefs[j].pattern + "'  title='" + columnDefs[j].hoverMsg + "' title  name='" + columnDefs[j].name + "' placeholder='" + columnDefs[j].title + "' data-special='" + columnDefs[j].special + "' data-errorMsg='" + columnDefs[j].msg + "' style='overflow:hidden'  class='form-control  form-control-sm' value='" + adata.data()[0][columnDefs[j].name] + "'>";
-                  data += "<label style=' color: red;' id='" + columnDefs[j].name + "label" + "' hidden class='errorLabel'></label>";
-                }
-              }
-
-              if(columnDefs[j].type.includes("noEdit")){
-
-                data += "<input readonly type='text' id='" + columnDefs[j].name + "'  pattern='" + columnDefs[j].pattern + "'  title='" + columnDefs[j].hoverMsg + "' title  name='" + columnDefs[j].name + "' placeholder='" + columnDefs[j].title + "' data-special='" + columnDefs[j].special + "' data-errorMsg='" + columnDefs[j].msg + "' style='overflow:hidden'  class='form-control  form-control-sm' value='" + adata.data()[0][columnDefs[j].name] + "'>";
-                data += "<label style=' color: red;' id='" + columnDefs[j].name + "label" + "' hidden class='errorLabel'></label>";
-              }
-
-              //Adding text-inputs and errorlabels
-              if(columnDefs[j].type.includes("date")){
-
-                setDatepicker = 1;
-                data += "<input type='text' id='" + columnDefs[j].name + "'  pattern='" + columnDefs[j].pattern + "'  title='" + columnDefs[j].hoverMsg + "' title  name='" + columnDefs[j].name + "' placeholder='" + columnDefs[j].title + "' data-special='" + columnDefs[j].special + "' data-errorMsg='" + columnDefs[j].msg + "' style='overflow:hidden; box-shadow: 0px 0px 0px #fff;'  class='form-control date-picker form-control-sm' value='" + adata.data()[0][columnDefs[j].name] + "'>";
-                data += "<label style=' color: red;' id='" + columnDefs[j].name + "label" + "' hidden class='errorLabel'></label>";
-              }
-
-              //Adding text-area and errorlabels
-              if(columnDefs[j].type.includes("txtarea")){
-                data += "<textarea  id='" + columnDefs[j].name + "'  pattern='" + columnDefs[j].pattern + "'  title='" + columnDefs[j].hoverMsg + "' title  name='" + columnDefs[j].name + "' placeholder='" + columnDefs[j].title + "' data-special='" + columnDefs[j].special + "' data-errorMsg='" + columnDefs[j].msg + "' style='overflow:hidden'  class='form-control  form-control-sm' >" + adata.data()[0][columnDefs[j].name] + "</textarea>";
-                data += "<label style=' color: red;' id='" + columnDefs[j].name + "label" + "' hidden class='errorLabel'></label>";
-              }
-
-              //Adding select-fields
-              if(columnDefs[j].type.includes("select")){
-
-                if (columnDefs[j].special && columnDefs[j].special.includes("noEdit")) 
-                {
-                  data += "<input readonly type='" + columnDefs[j].type + "' id='" + columnDefs[j].name + "'  pattern='" + columnDefs[j].pattern + "'  title='" + columnDefs[j].hoverMsg + "' title  name='" + columnDefs[j].name + "' placeholder='" + columnDefs[j].title + "' data-special='" + columnDefs[j].special + "' data-errorMsg='" + columnDefs[j].msg + "' style='overflow:hidden'  class='form-control  form-control-sm' value='" + adata.data()[0][columnDefs[j].name] + "'>";
-                  data += "<label style=' color: red;' id='" + columnDefs[j].name + "label" + "' hidden class='errorLabel'></label>";
-                }
-                else
-                {
-
-                 var options = "";
-                 var func = "";
-                  for (var i = 0; i < columnDefs[j].options.length; i++) {
-
-                    //Assigning the selected value of the <selected> option
-                    if(adata.data()[0][columnDefs[j].name].includes(columnDefs[j].options[i].label)){
-                      options += "<option value='" + columnDefs[j].options[i].value + "' selected >" + columnDefs[j].options[i].label + "</option>";
-                    }else{
-                      options += "<option value='" + columnDefs[j].options[i].value + "'>" + columnDefs[j].options[i].label + "</option>";
-                    }
-                  }
-
-                  if(columnDefs[j].depends)
-                  {
-                    data += "<select id='" + columnDefs[j].name + "'  name='" + columnDefs[j].name + "' class='form-control' onChange='update()'>" + options + "</select>";
-                  }
-                  else
-                  {
-                    data += "<select id='" + columnDefs[j].name + "'  name='" + columnDefs[j].name + "' class='form-control'>" + options + "</select>";
-                  }
-
-                  data += "<label style=' color: red;' id='" + columnDefs[j].name + "label" + "' hidden class='errorLabel'></label>";
-                }
-              
-              } 
-
-               //Adding file-inputs and errorlabels
-              if(columnDefs[j].type.includes("file")){
-                data += "<input type='" + columnDefs[j].type + "' title id='" + columnDefs[j].name + "'  pattern='" + columnDefs[j].pattern + "'  title='" + columnDefs[j].hoverMsg + "' name='" + columnDefs[j].name + "' placeholder='" + columnDefs[j].title + "' data-special='" + columnDefs[j].special + "' data-errorMsg='" + columnDefs[j].msg + "' style='overflow:hidden'  class='form-control  form-control-sm' value='" + adata.data()[0][columnDefs[j].name] + "'>";
-                data += "<label id='" + columnDefs[j].name + "label" + "' class=''>leave empty for no change!</label>";
-              }
-
-              data +="</div><div style='clear:both;'></div></div>";
+            //Adding text-inputs and errorlabels
+            if(columnDefs[j].type.includes("text")){
+              data += "<input type='" + columnDefs[j].type + "' id='" + columnDefs[j].name + "'  pattern='" + columnDefs[j].pattern + "'  title='" + columnDefs[j].hoverMsg + "' name='" + columnDefs[j].title + "' placeholder='" + columnDefs[j].title + "' data-special='" + columnDefs[j].special + "' data-errorMsg='" + columnDefs[j].msg + "' style='overflow:hidden'  class='form-control  form-control-sm' value='" + adata.data()[0][columnDefs[j].name] + "'>";
+              data += "<label id='" + columnDefs[j].name + "label" + "' class='errorLabel'></label>";
             }
-         
+
+            //Adding file-inputs and errorlabels
+            if(columnDefs[j].type.includes("file")){
+              data += "<input type='" + columnDefs[j].type + "' id='" + columnDefs[j].name + "'  pattern='" + columnDefs[j].pattern + "'  title='" + columnDefs[j].hoverMsg + "' name='" + columnDefs[j].title + "' placeholder='" + columnDefs[j].title + "' data-special='" + columnDefs[j].special + "' data-errorMsg='" + columnDefs[j].msg + "' style='overflow:hidden'  class='form-control  form-control-sm' value='" + adata.data()[0][columnDefs[j].name] + "'>";
+              data += "<label id='" + columnDefs[j].name + "label" + "' class='errorLabel'></label>";
+            }
+
             //Adding readonly-fields
             if(columnDefs[j].type.includes("readonly")){
-              data += "<input type='hidden'  id='" + columnDefs[j].title + "' name='" + columnDefs[j].name + "' title  placeholder='" + columnDefs[j].title + "' style='overflow:hidden'  class='form-control  form-control-sm' value='" + adata.data()[0][columnDefs[j].name] + "'>";
+              data += "<input type='text' readonly  id='" + columnDefs[j].title + "' name='" + columnDefs[j].title + "' placeholder='" + columnDefs[j].title + "' style='overflow:hidden'  class='form-control  form-control-sm' value='" + adata.data()[0][columnDefs[j].name] + "'>";
             }
 
+            //Adding select-fields
+            if(columnDefs[j].type.includes("select")){
+              var options = "";
+              for (var i = 0; i < columnDefs[j].options.length; i++) {
+                //Assigning the selected value of the <selected> option
+                if(adata.data()[0][columnDefs[j].name].includes(columnDefs[j].options[i])){
+                  options += "<option value='" + columnDefs[j].options[i].value + "'selected>" + columnDefs[j].options[i].label + "</option>";
+                }else{
+                  options += "<option value='" + columnDefs[j].options[i].value + "'>" + columnDefs[j].options[i].label + "</option>";
+                }
+              }
+              data += "<select class='form-control'>" + options + "</select>";
+            } 
+            data +="</div><div style='clear:both;'></div></div>";
           }
 
           data += "</form>";
@@ -652,29 +354,56 @@ var fail_message;
 
           $('#altEditor-modal').modal('show');
           $('#altEditor-modal input[0]').focus();
-          new update();
-          if (setDatepicker == 1) 
-          {
-            $('.date-picker').daterangepicker({
-              singleDatePicker: true,
-              showDropdowns: true,
-              drops: 'up',
-              calender_style: "picker_4"
-              });
-          }
         },
 
         _editRowData: function()
         {
-          	var that = this;
+          var that = this;
+          var dt = this.s.dt;
 
-	        var form = $('form#altEditor-form-edit')[0];
-	        var formData = new FormData(form);
-	        formData.append('action','edit');
+        //Data from table columns
+        var columnIds = [];
+        //Data from input-fields
+        var dataSet = [];
+        //For JSON
+        var aaData = [];
+        var jsonDataArray = {};
+        //complete JSONString for ajax call
+        var comepleteJsonData = {};
 
-	        //Calling AJAX with data, tableObject, command.
-	        updateJSON(formData, that, "editRow");   
-  		},
+        comepleteJsonData.data = aaData;
+
+        var adata = dt.rows({
+          selected: true
+        });
+
+        //Getting the IDs and Values of the tablerow
+        for( var i = 0; i < dt.context[0].aoColumns.length; i++ )
+        {
+          columnIds.push({ id: dt.context[0].aoColumns[i].id,
+            dataSet: adata.data()[0][dt.context[0].aoColumns[i].data]
+          }); 
+        }
+
+        //Adding the ID & value of DT_RowId to the JsonArray
+        jsonDataArray[columnIds[0].id] = columnIds[0].dataSet;
+
+        //Getting the inputs from the edit-modal
+        $('form[name="altEditor-form"] *').filter(':input').each(function( i )
+        {
+          dataSet.push( $(this).val() );
+        });    
+
+        //Adding the inputs from the edit-modal to JsonArray
+        for(var i = 0; i < dataSet.length; i++){
+          jsonDataArray[columnIds[i+1].id] = dataSet[i];
+        }
+        comepleteJsonData.data.push(jsonDataArray);
+
+
+        //Calling AJAX with data, tableObject, command.
+        updateJSON(comepleteJsonData, that, "editRow");   
+  },
 
 
        /**
@@ -689,7 +418,7 @@ var fail_message;
          var columnDefs = [];
 
          //Adding attribute IDs and values to object
-         for( var i = 0; i < dt.context[0].aoColumns.length; i++ )
+         for( var i = 1; i < dt.context[0].aoColumns.length; i++ )
          {
           columnDefs.push({ title: dt.context[0].aoColumns[i].sTitle,
             name: dt.context[0].aoColumns[i].data
@@ -702,9 +431,9 @@ var fail_message;
         //Building delete-modal
         var data = "";
 
-        data += "<form id='altEditor-form-delete' name='altEditor-form' role='form'>";
+        data += "<form name='altEditor-form' role='form'>";
         for(var j = 0; j < columnDefs.length; j++){
-          data += "<div class='form-group'><label for='" + columnDefs[j].name + "'>" + columnDefs[j].title + " : </label><input  type='hidden'  id='" + columnDefs[j].title + "' name='" + columnDefs[j].name + "' placeholder='" + columnDefs[j].title + "' style='overflow:hidden'  class='form-control' value='" + adata.data()[0][columnDefs[j].name] + "' >" + adata.data()[0][columnDefs[j].name] + "</input></div>";
+          data += "<div class='form-group'><label for='" + columnDefs[j].title + "'>" + columnDefs[j].title + " : </label><input  type='hidden'  id='" + columnDefs[j].title + "' name='" + columnDefs[j].title + "' placeholder='" + columnDefs[j].title + "' style='overflow:hidden'  class='form-control' value='" + adata.data()[0][columnDefs[j].name] + "' >" + adata.data()[0][columnDefs[j].name] + "</input></div>";
         }
         data += "</form>";
 
@@ -722,14 +451,31 @@ var fail_message;
 
       _deleteRow: function( )
       {
-       		var that = this;
+       var that = this;
+       var dt = this.s.dt;
 
-	        var form = $('form#altEditor-form-delete')[0];
-	        var formData = new FormData(form);
-	        formData.append('action','delete');
+        //For JSON
+        var aaData = [];
+        var jsonDataArray = {};
+        //complete JSONString for ajax call
+        var comepleteJsonData = {};
 
-	        //Calling AJAX with data, tableObject, command.
-	        updateJSON(formData, that, "deleteRow");
+        comepleteJsonData.data = aaData;
+
+        var adata = dt.rows({
+          selected: true
+        });
+
+        //Getting the IDs and Values of the tablerow
+        for( var i = 0; i < dt.context[0].aoColumns.length; i++ )
+        {
+          jsonDataArray[dt.context[0].aoColumns[i].id] = adata.data()[0][dt.context[0].aoColumns[i].data];
+        }
+
+        comepleteJsonData.data.push(jsonDataArray);
+
+        //Calling AJAX with data, tableObject, command.
+        updateJSON(comepleteJsonData, that, "deleteRow");
 
  },
 
@@ -746,15 +492,12 @@ var fail_message;
          var columnDefs = [];
 
          //Adding column attributes to object.
-         for( var i = 0; i < dt.context[0].aoColumns.length; i++ )
+         for( var i = 1; i < dt.context[0].aoColumns.length; i++ )
          {
           columnDefs.push({ title: dt.context[0].aoColumns[i].sTitle,
             name: dt.context[0].aoColumns[i].data,
             type: dt.context[0].aoColumns[i].type,
             options: dt.context[0].aoColumns[i].options,
-            def: dt.context[0].aoColumns[i].def,
-            depends: dt.context[0].aoColumns[i].depends,
-            class: dt.context[0].aoColumns[i].class,
             msg: dt.context[0].aoColumns[i].errorMsg,
             hoverMsg: dt.context[0].aoColumns[i].hoverMsg,
             pattern: dt.context[0].aoColumns[i].pattern,
@@ -764,139 +507,86 @@ var fail_message;
 
         //Building add-form
         var data = "";
+        data += "<form name='altEditor-form' role='form'>";
+        for(var j = 0; j < columnDefs.length; j++){
+         data += "<div class='form-group'><div class='col-sm-5 col-md-5 col-lg-5 text-right' style='padding-top:4px;'><label for='" + columnDefs[j].title + "'>" + columnDefs[j].title + ":</label></div><div class='col-sm-6 col-md-6 col-lg-6'>";
 
-        var setDatepicker = 0;
-
-        data += "<form id='altEditor-form-add' enctype='multipart/form-data' name='altEditor-form' role='form'>";
-
-
-        if (dt.context[0].ajax.url == 'sectionDAO.php') 
-        {
-
-          data += "<input type='hidden' id='class_name'  pattern=''  title='' title  name='class_name' placeholder='' data-special='' data-errorMsg='' style='overflow:hidden'  class='form-control  form-control-sm' value='"+dt.context[0].ajax.data.id+"'>";
-
+         //Adding text-inputs and errorlabels
+         if(columnDefs[j].type.includes("text")){
+          data += "<input type='" + columnDefs[j].type + "' id='" + columnDefs[j].name + "'  pattern='" + columnDefs[j].pattern + "'  title='" + columnDefs[j].hoverMsg + "' name='" + columnDefs[j].title + "' placeholder='" + columnDefs[j].title + "' data-special='" + columnDefs[j].special + "' data-errorMsg='" + columnDefs[j].msg + "' style='overflow:hidden'  class='form-control  form-control-sm' value=''>";
+          data += "<label id='" + columnDefs[j].name + "label" + "' class='errorLabel'></label>";
         }
 
-        for(var j = 0; j < columnDefs.length; j++){
+        //Adding readonly-fields
+        if(columnDefs[j].type.includes("readonly")){
+          data += "<input type='text' readonly  id='" + columnDefs[j].name + "' name='" + columnDefs[j].title + "' placeholder='" + columnDefs[j].title + "' style='overflow:hidden'  class='form-control  form-control-sm' value=''>";
+        }
 
-            
-
-            if (!columnDefs[j].type.includes("readonly")) {
-
-              data += "<div class='form-group'>"
-
-              data += "<div class='col-sm-5 col-md-5 col-lg-5 text-right' style='padding-top:4px;'>"
-              
-              data += "<label for='" + columnDefs[j].name + "'>" + columnDefs[j].title + ":</label></div>"
-
-              data += "<div class='col-sm-6 col-md-6 col-lg-6'>";
-
-                 //Adding text-inputs and errorlabels
-                if(columnDefs[j].type.includes("text")){
-
-                  data += "<input type='" + columnDefs[j].type + "' id='" + columnDefs[j].name + "'  pattern='" + columnDefs[j].pattern + "'  title='" + columnDefs[j].hoverMsg + "' title  name='" + columnDefs[j].name + "' placeholder='" + columnDefs[j].title + "' data-special='" + columnDefs[j].special + "' data-errorMsg='" + columnDefs[j].msg + "' style='overflow:hidden'  class='form-control  form-control-sm' value=''>";
-                  data += "<label style=' color: red;' id='" + columnDefs[j].name + "label" + "' hidden hidden class='errorLabel'></label>";
-                }
-
-                //Adding text-inputs and errorlabels
-                if(columnDefs[j].type.includes("date")){
-
-                  setDatepicker = 1;
-                  data += "<input type='text' id='" + columnDefs[j].name + "'  pattern='" + columnDefs[j].pattern + "'  title='" + columnDefs[j].hoverMsg + "' title  name='" + columnDefs[j].name + "' placeholder='" + columnDefs[j].title + "' data-special='" + columnDefs[j].special + "' data-errorMsg='" + columnDefs[j].msg + "' style='overflow:hidden; box-shadow: 0px 0px 0px #fff;'  class='form-control date-picker form-control-sm' value=''>";
-                  data += "<label style=' color: red;' id='" + columnDefs[j].name + "label" + "' hidden class='errorLabel'></label>";
-                }
-
-                if(columnDefs[j].type.includes("noEdit")){
-
-                data += "<input type='text' readonly id='" + columnDefs[j].name + "'  pattern='" + columnDefs[j].pattern + "'  title='" + columnDefs[j].hoverMsg + "' title  name='" + columnDefs[j].name + "' placeholder='" + columnDefs[j].title + "' data-special='" + columnDefs[j].special + "' data-errorMsg='" + columnDefs[j].msg + "' style='overflow:hidden'  class='form-control  form-control-sm' value='"+columnDefs[j].def+"'>";
-                data += "<label style=' color: red;' id='" + columnDefs[j].name + "label" + "' hidden class='errorLabel'></label>";
-                }
-
-                //Adding text-area and errorlabels
-                if(columnDefs[j].type.includes("txtarea")){
-                  data += "<textarea  id='" + columnDefs[j].name + "'  pattern='" + columnDefs[j].pattern + "'  title='" + columnDefs[j].hoverMsg + "' title  name='" + columnDefs[j].name + "' placeholder='" + columnDefs[j].title + "' data-special='" + columnDefs[j].special + "' data-errorMsg='" + columnDefs[j].msg + "' style='overflow:hidden'  class='form-control  form-control-sm' ></textarea>";
-                  data += "<label style=' color: red;' id='" + columnDefs[j].name + "label" + "' hidden class='errorLabel'></label>";
-                }
-
-                //Adding select-fields
-                if(columnDefs[j].type.includes("select")){
-
-                  var options = "";
-                  var func = "";
-                    for (var i = 0; i < columnDefs[j].options.length; i++) {
-
-                      //Assigning the selected value of the <selected> option
-                      options += "<option value='" + columnDefs[j].options[i].value + "'>" + columnDefs[j].options[i].label + "</option>";
-
-                    }
-
-                    if(columnDefs[j].depends)
-                    {
-                      data += "<select id='" + columnDefs[j].name + "'  name='" + columnDefs[j].name + "' class='form-control' onChange='update()'>" + options + "</select>";
-                    }
-                    else
-                    {
-                      data += "<select id='" + columnDefs[j].name + "'  name='" + columnDefs[j].name + "' class='form-control'>" + options + "</select>";
-                    }
-
-                    data += "<label style=' color: red;' id='" + columnDefs[j].name + "label" + "' hidden class='errorLabel'></label>";
-
-                
-                } 
-
-                 //Adding file-inputs and errorlabels
-                if(columnDefs[j].type.includes("file")){
-                  data += "<input type='" + columnDefs[j].type + "' title id='" + columnDefs[j].name + "'  pattern='" + columnDefs[j].pattern + "'  title='" + columnDefs[j].hoverMsg + "' name='" + columnDefs[j].name + "' placeholder='" + columnDefs[j].title + "' data-special='" + columnDefs[j].special + "' data-errorMsg='" + columnDefs[j].msg + "' style='overflow:hidden'  class='form-control  form-control-sm' value=''>";
-                  data += "<label id='" + columnDefs[j].name + "label" + "' class=''>leave empty for no change!</label>";
-                }
-
-              data +="</div><div style='clear:both;'></div></div>";                
-
-             }
-
-            //Adding readonly-fields
-            if(columnDefs[j].type.includes("readonly")){
-              data += "<input type='hidden'  id='" + columnDefs[j].title + "' name='" + columnDefs[j].name + "' title  placeholder='" + columnDefs[j].title + "' style='overflow:hidden'  class='form-control  form-control-sm' value=''>";
-            }
-
+        //Adding select-fields
+        if(columnDefs[j].type.includes("select")){
+          var options = "";
+          for (var i = 0; i < columnDefs[j].options.length; i++) {
+            options += "<option value='" + columnDefs[j].options[i] + "'>" + columnDefs[j].options[i] + "</option>";
           }
+          data += "<select class='form-control'>" + options + "</select>";
+        } 
+        data +="</div><div style='clear:both;'></div></div>";
+      } 
+      data += "</form>";
 
-          data += "</form>";
+        $('#altEditor-modal').on('show.bs.modal', function() {
+          $('#altEditor-modal').find('.modal-title').html('Add Record');
+          $('#altEditor-modal').find('.modal-body').html(data);
+          $('#altEditor-modal').find('.modal-footer').html("<button type='button' data-content='remove' class='btn btn-default' data-dismiss='modal'>Close</button>\
+           <input type='submit'  data-content='remove' class='btn btn-primary' id='addRowBtn'></input>");
+        });
 
-
-          $('#altEditor-modal').on('show.bs.modal', function() {
-            $('#altEditor-modal').find('.modal-title').html('Edit Record');
-            $('#altEditor-modal').find('.modal-body').html(data);
-            $('#altEditor-modal').find('.modal-footer').html("<button type='button' data-content='remove' class='btn btn-default' data-dismiss='modal'>Close</button>\
-             <button type='button' data-content='remove' class='btn btn-primary' id='addRowBtn'>Submit Query</button>");
-
-          });
-
-
-          $('#altEditor-modal').modal('show');
-          $('#altEditor-modal input[0]').focus();
-          new update();
-          if (setDatepicker == 1) 
-          {
-            $('.date-picker').daterangepicker({
-              singleDatePicker: true,
-              showDropdowns: true,
-              drops: 'up',
-              calender_style: "picker_4"
-              });
-          }
+        $('#altEditor-modal').modal('show');
+        $('#altEditor-modal input[0]').focus();
       },
 
       _addRowData: function()
       {
         var that = this;
+        var dt = this.s.dt;
+        var rowID = dt.rows().data().length;
+        //Containers with data from table columns
+        var columnIds = [];
+        //Data from input-fields.
+        var inputDataSet = [];
+        //For JSON
+        var aaData = [];
+        var jsonDataArray = {};
+        //complete JSONString for ajax call
+        var comepleteJsonData = {};
 
-	        var form = $('form#altEditor-form-add')[0];
-	        var formData = new FormData(form);
-	        formData.append('action','add');
+        comepleteJsonData.data = aaData;
 
-	        //Calling AJAX with data, tableObject, command.
-	        updateJSON(formData, that, "addRow"); 
+        //Getting the IDs and Values of the tablerow
+        for( var i = 0; i < dt.context[0].aoColumns.length; i++ ){
+          columnIds.push({ id: dt.context[0].aoColumns[i].id });    
+        }
+
+        //Adding the ID & value(metadata) of the row to the JsonArray
+        jsonDataArray[columnIds[0].id] = rowID;
+
+        //Getting the inputs from the modal
+        $('form[name="altEditor-form"] *').filter(':input').each(function( i ){
+
+          inputDataSet.push( $(this).val() );
+        });    
+
+        //Adding the inputs from the modal to JsonArray
+        for(var i = 0; i < inputDataSet.length; i++){
+          jsonDataArray[columnIds[i+1].id] = inputDataSet[i];
+        }
+        comepleteJsonData.data.push(jsonDataArray);
+
+
+        //Calling AJAX with data, tableObject, command.
+        updateJSON(comepleteJsonData, that, "addRow");
+
+        
 
 },
 
@@ -995,53 +685,45 @@ var initValidation = function(){
   $('form[name="altEditor-form"] *').filter(':text').each(function( i ){
     var errorLabel = "#"+ $(this).attr("id") + "label";
 
-    	// alert($(this).attr("id"));
+    //Inputvalidation for port range
+    if($(this).attr("data-special") === "portRange"){
+      var ports;
+      if($(this).val().includes(":")){
+        ports = $(this).val().split(":")
 
-      if ($.trim($(this).val()) == "") 
-      {
+        var num1 = parseInt(ports[0])
+        var num2 = parseInt(ports[1])
 
-      	$(errorLabel).html('Required Feild');
-        $(errorLabel).show();
-        errorcount++;
+        if(num1 < num2){
+          if(ports[0].match($(this).attr("pattern")) && ports[1].match($(this).attr("pattern"))){
+            $(errorLabel).hide();
+            $(errorLabel).empty();
+          }else{
+            $(errorLabel).html($(this).attr("data-errorMsg"));
+            $(errorLabel).show();
+            errorcount++
+          }
+        }else{
+          $(errorLabel).html($(this).attr("data-errorMsg"));
+          $(errorLabel).show();
+          errorcount++
+        }
 
-      //If no error
-      }else{
-        $(errorLabel).hide();
-        $(errorLabel).empty();
+      //If the port isnt a range
+      }else if (!$(this).val().match($(this).attr("pattern"))){
+           $(errorLabel).html($(this).attr("data-errorMsg"));
+           $(errorLabel).show();
+           errorcount++
+         }else{
 
-      }
-    });
+          //If no error
+          $(errorLabel).hide();
+          $(errorLabel).empty();
+        }
 
-
-  //Looping through all file fields
-  $('form[name="altEditor-form"] select').each(function( i ){
-    var errorLabel = "#"+ $(this).attr("id") + "label";
-
-    	// alert($(this).attr("id"));
-
-      if ($(this).val() == -1) 
-      {
-      	$(errorLabel).html('Please chose correct option!');
-        $(errorLabel).show();
-        errorcount++;
-
-      //If no error
-      }else{
-        $(errorLabel).hide();
-        $(errorLabel).empty();
-
-      }
-    });
-
-  //Looping through all textarea fields
-  $('form[name="altEditor-form"] textarea').each(function( i ){
-    var errorLabel = "#"+ $(this).attr("id") + "label";
-
-    	// alert($(this).val());
-
-      if ($.trim($(this).val()) == "") 
-      {
-      	$(errorLabel).html('Required Feild');
+    //All other text-inputs    
+    }else if($(this).attr("data-special") != "portRange" && !$(this).context.checkValidity()){
+        $(errorLabel).html($(this).attr("data-errorMsg"));
         $(errorLabel).show();
         errorcount++;
 
@@ -1065,151 +747,51 @@ var updateJSON = function(data, tableObj, act){
   
   var dt = tableObj.s.dt;
 
-  checkUrl = "";
-  checkStudentUrl = false; 
-  checkSectionUrl = false;
-
-  if (dt.context[0].ajax.url) 
-  {
-    checkUrl = dt.context[0].ajax.url;
-    if (dt.context[0].ajax.url == 'feedbackDAO.php')
-    {
-      success_message = 'Feedback has been sent';
-      fail_message = 'Error occured while sending feeback!';
+  var jqxhr =
+  $.ajax({
+    url: "php/" + dt.context[0].sTableId + ".php",
+    type : "POST",
+    cache: false,
+    data: {
+      raw: data,
+      action: act
     }
-    else if (dt.context[0].ajax.url == 'academiaDAO.php') 
-    {
-      success_message = 'Message has been sent';
-      fail_message = 'Error occured while sending message!';
+  })
+  .done (function(data) { 
+
+    //If data = false, then data is already present
+    //Server doesn't allow duplicate data.
+    if(data === "false"){
+      $('#altEditor-modal .modal-body .alert').remove();
+
+      var message = '<div class="alert alert-danger" role="alert">\
+      <strong>Fail!</strong> Data already exists.\
+      </div>';
+      $('#altEditor-modal .modal-body').append(message); 
+    }else{
+      $('#altEditor-modal .modal-body .alert').remove();
+
+      var message = '<div class="alert alert-success" role="alert">\
+      <strong>Success!</strong>\
+      </div>';
+      $('#altEditor-modal .modal-body').append(message); 
+      
+      //Reload data from server to table
+      dt.ajax.reload();
+
+      //Disabling submit button
+       $("#"+act+"Btn").prop('disabled', true);
+  
     }
-    else if (dt.context[0].ajax.url == 'studentDAO.php')
-    {
-      checkStudentUrl = true;
-      success_message = 'Notification has been sent';
-      fail_message = 'Error occured while sending notification!';
-    }
-    else if (dt.context[0].ajax.url == 'sectionDAO.php')
-    {
-      checkSectionUrl = true;
-    }
-  }
-  else
-  {
-    checkUrl = dt.context[0].ajax;
-  }
+  })
+  .fail (function(error)  { 
 
-  console.log("start : " + checkUrl +" "+ checkSectionUrl + " " + checkStudentUrl + " " + success_message + " " + fail_message + " " + dt);
+   $('#altEditor-modal .modal-body .alert').remove();
 
-  if (checkUrl == ajaxUrl && count == 0) 
-  {
-      count++;
-  	  $.ajax({
-	    url: ajaxUrl,
-	    type : "POST",
-	    processData: false,
-	    contentType: false,
-	    cache: false,
-	    data: data,
-	    
-	  })
-	  	.done (function(data) { 
+   var message = '<div class="alert alert-danger" role="alert">\
+   <strong>Error!</strong> Reponse code: ' + error.status + '\
+   </div>';
 
-	    //If data = false, then data is already present
-	    //Server doesn't allow duplicate data.
-	    if($.trim(data) !== "success"){ 
-
-        if (act == feedback) 
-        {
-          new PNotify({
-            title: 'Status',
-            text: fail_message,
-            type: 'error',
-            styling: 'bootstrap3'
-        });
-        }
-        else
-        {
-
-	      $('#altEditor-modal .modal-body .alert').remove();
-
-	      var message = '<div class="alert alert-danger" role="alert">\
-	      <strong>' + data + '</strong>\
-	      </div>';
-	      $('#altEditor-modal .modal-body').append(message); 
-        }
-	    }else{
-
-        $('#altEditor-modal').modal('hide');
-
-        if (act == 'feedback')
-        {
-        	console.log("feedback : " + checkUrl +" "+ checkSectionUrl + " " + checkStudentUrl + " " + success_message + " " + fail_message + " " + dt);
-          new PNotify({
-            title: 'Status',
-            text: success_message,
-            type: 'success',
-            styling: 'bootstrap3'
-          });
-        }
-        else
-        {	
-        
-  	      $('#altEditor-modal .modal-body .alert').remove();
-
-          //Reload data from server to table
-          if (checkStudentUrl)
-          {
-            studentTable.ajax.reload();
-            console.log("studentTable : " + checkUrl +" "+ checkSectionUrl + " " + checkStudentUrl + " " + success_message + " " + fail_message + " " + dt);
-          }
-          else if (checkSectionUrl)
-          {
-            sectionTable.ajax.reload();
-            console.log("sectionTable : " + checkUrl +" "+ checkSectionUrl + " " + checkStudentUrl + " " + success_message + " " + fail_message + " " + dt);
-          }
-          else
-          {
-          	if (ajaxUrl == 'teacherDAO.php') 
-          	{
-          		teacherTable.ajax.reload();
-          		console.log("teacherTable");
-          	}
-          	else if (ajaxUrl == 'studentDAO.php') 
-          	{
-          		dstudentTable.ajax.reload();
-          		console.log("dstudentTable");
-          	}
-          	else if (ajaxUrl == 'sectionDAO.php') 
-          	{
-          		dsectionTable.ajax.reload();
-          		console.log("dsectionTable");
-          	}
-          	else
-          	{
-          		dt.ajax.reload();
-          	}
-            
-            console.log("otherTables : " + checkUrl +" "+ checkSectionUrl + " " + checkStudentUrl + " " + success_message + " " + fail_message + " " + dt);
-          }
-      }
-
-	      //Disabling submit button
-	       // $("#"+act+"Btn").prop('disabled', true);
-	    }
-	   })
-	   .fail (function(error)  { 
-
-	   $('#altEditor-modal .modal-body .alert').remove();
-
-	   var message = '<div class="alert alert-danger" role="alert">\
-	   <strong>Error!</strong> Reponse code: ' + error.status + '\
-	   </div>';
-
-	   $('#altEditor-modal .modal-body').append(message); });
-
-  }
-
+   $('#altEditor-modal .modal-body').append(message); });
 
 }
-
-  
