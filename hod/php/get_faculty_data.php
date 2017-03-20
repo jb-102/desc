@@ -113,7 +113,7 @@
     }
     else{
         
-      $query = "SELECT * from slider";
+      $query = "SELECT * from teacher_profile";
 
       $res = $conn -> query($query);
 

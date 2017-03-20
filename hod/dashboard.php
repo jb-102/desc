@@ -116,7 +116,7 @@
               <ul class="nav navbar-nav navbar-right">
                 <li class="">
                   <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                    <img src="images/img.jpg" alt="">Administrator
+                    <img src="images/img.jpg" alt="">HOD
                     <span class=" fa fa-angle-down"></span>
                   </a>
                   <ul class="dropdown-menu dropdown-usermenu pull-right">
@@ -137,7 +137,7 @@
             <!-- top menu tabs -->
             <div class="top_menu" >
 
-              <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+              <div class="animated flipInY col-lg-3 col-md-6 col-sm-6 col-xs-12">
                 <div class="tile-stats">
                   <div class="icon"><i class="fa fa-plus-square"></i>
                   </div>
@@ -150,7 +150,7 @@
                 </div>
               </div>
 
-              <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+              <div class="animated flipInY col-lg-3 col-md-6 col-sm-6 col-xs-12">
                 <div class="tile-stats">
                   <div class="icon"><i class="fa fa-plus-square"></i>
                   </div>
@@ -163,7 +163,7 @@
                 </div>
               </div>
 
-              <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+              <div class="animated flipInY col-lg-3 col-md-6 col-sm-6 col-xs-12">
                 <div class="tile-stats">
                   <div class="icon"><i class="fa fa-plus-square"></i>
                   </div>
@@ -176,7 +176,7 @@
                 </div>
               </div>
 
-              <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+              <div class="animated flipInY col-lg-3 col-md-6 col-sm-6 col-xs-12">
                 <div class="tile-stats">
                   <div class="icon"><i class="fa fa-plus-square"></i>
                   </div>
@@ -197,7 +197,7 @@
 
           <div id="content_main">
             
-            <!-- content to add/edit slider -->
+            <!-- coordinator -->
             <div hidden class="row" id="coordinator_div">
 
               <div class="col-md-12 col-sm-12 col-xs-12">
@@ -205,7 +205,7 @@
                 <div class="x_panel">
 
                   <div class="x_title">
-                    <h2>EDIT CATEGORY DETAILS</h2>
+                    <h2>CO-ORDINATOR DETAILS</h2>
                     <div class="clearfix"></div>
                   </div>
 
@@ -213,10 +213,11 @@
                     <table id="coordinator_datatable-responsive" class="table table-striped table-bordered dt-responsive wrap" cellspacing="0" width="100%">
                       <thead>
                         <tr>
-                          <th>TEACHER ID</th>
-                          <th>CATEGORY NAME</th>
-                          <th>CATEGORY DESCRIPTION</th>
-                          <th>STOCK</th>
+                          <th>ID</th>
+                          <th>NAME</th>
+                          <th>COURSE</th>
+                          <th>SEMESTER</th>
+                          <th>SECTION</th>
                         </tr>
                       </thead>
                     </table>  
@@ -225,15 +226,15 @@
               </div>
             </div>    
 
-            <!-- content to edit/delete card -->
-            <div hidden class="row" id="edit_card_div">
+            <!-- faculty -->
+            <div hidden class="row" id="faculty_div">
 
               <div class="col-md-12 col-sm-12 col-xs-12">
 
                 <div class="x_panel">
 
                   <div class="x_title">
-                    <h2>EDIT CARD DETAILS</h2>
+                    <h2>FACULTY DETAILS</h2>
                     <div class="clearfix"></div>
                   </div>
 
@@ -241,14 +242,14 @@
                     <table id="faculty_datatable-responsive" class="table table-striped table-bordered dt-responsive wrap" cellspacing="0" width="100%">
                       <thead>
                         <tr>
-                          <th></th>
-                          <th>CARD NAME</th>
-                          <th>CARD DESCRIPTION</th>
-                          <th>CARD PRICE</th>
-                          <th>CARD CATEGORY</th>
-                          <th>CARD IMAGE</th>
-                          <th>CARD ON HOME</th>
-                          <th>LATEST</th>
+                          <th>ID</th>
+                          <th>NAME</th>
+                          <th>ADDRESS</th>
+                          <th>PHONE</th>
+                          <th>EMAIL</th>
+                          <th>QUALIFICATION</th>
+                          <th>DESIGNATION</th>
+                          <th>D.O.J</th>
                         </tr>
                       </thead>
                     </table>  
@@ -257,7 +258,7 @@
               </div>
             </div>   
 
-            <!-- content to edit/delete testimonials -->
+            <!-- students -->
             <div hidden  class="row" id="student_div">
 
               <div class="col-md-12 col-sm-12 col-xs-12">
@@ -265,7 +266,7 @@
                 <div class="x_panel">
 
                   <div class="x_title">
-                    <h2>EDIT TESTIMONIALS DETAILS</h2>
+                    <h2>STUDENTS DETAILS</h2>
                     <div class="clearfix"></div>
                   </div>
 
@@ -284,6 +285,35 @@
                           <th>REG NO</th>
                           <th>BATCH</th>
                           <th>REG STATUS</th>
+                        </tr>
+                      </thead>
+                    </table>  
+                  </div>
+
+                </div>
+
+              </div>
+            </div> 
+
+            <!-- Greviences -->
+            <div hidden  class="row" id="grevience_div">
+
+              <div class="col-md-12 col-sm-12 col-xs-12">
+
+                <div class="x_panel">
+
+                  <div class="x_title">
+                    <h2>GREVIENCES</h2>
+                    <div class="clearfix"></div>
+                  </div>
+
+                  <div class="x_content" style="display: block;">
+                    <table id="students_datatable-responsive" class="table table-striped table-bordered dt-responsive wrap" cellspacing="0" width="100%">
+                      <thead>
+                        <tr>
+                          <th>ID</th>
+                          <th>SUBJECT</th>
+                          <th>MESSAGE</th>
                         </tr>
                       </thead>
                     </table>  
@@ -416,9 +446,10 @@
     $(".link").removeClass('active');
     $("#coordinator_nav .link").addClass('active');
     $("#content_main").slideDown();
-  	$("#category_div").slideDown();
-    $("#edit_card_div").slideUp();
-    $("#testimonials_div").slideUp();
+  	$("#coordinator_div").slideDown();
+    $("#faculty_div").slideUp();
+    $("#student_div").slideUp();
+    $("#grevience_div").slideUp();
 
   });
 
@@ -427,9 +458,10 @@
     $(".link").removeClass('active');
     $("#faculty_nav .link").addClass('active');
     $("#content_main").slideDown();
-    $("#category_div").slideUp();
-    $("#edit_card_div").slideDown();
-    $("#testimonials_div").slideUp();
+    $("#coordinator_div").slideUp();
+    $("#faculty_div").slideDown();
+    $("#student_div").slideUp();
+    $("#grevience_div").slideUp();
 
   });
 
@@ -438,7 +470,10 @@
     $(".link").removeClass('active');
     $("#student_nav .link").addClass('active');
     $("#content_main").slideDown();
+    $("#coordinator_div").slideUp();
+    $("#faculty_div").slideUp();
     $("#student_div").slideDown();
+    $("#grevience_div").slideUp();
 
   });  
 
@@ -447,9 +482,10 @@
     $(".link").removeClass('active');
     $("#greviences_nav .link").addClass('active');
     $("#content_main").slideDown();
-    $("#category_div").slideUp();
-    $("#edit_card_div").slideDown();
-    $("#testimonials_div").slideUp();
+    $("#coordinator_div").slideUp();
+    $("#faculty_div").slideUp();
+    $("#student_div").slideUp();
+    $("#grevience_div").slideDown();
 
   });  
 </script>
@@ -466,244 +502,270 @@
 <!-- Datatables -->
 <script>
 
-  var slider_editor,category_editor,card_editor,student_editor,testimonials_editor;
+  var coordinator_editor,faculty_editor,grevience_editor,student_editor;
 
   $(document).ready(function() {
 
     {
-          slider_editor = new $.fn.dataTable.Editor( {
-              ajax: "./php/get_slider_data.php",
+          coordinator_editor = new $.fn.dataTable.Editor( {
+              ajax: "./php/get_coordinator_data.php",
               keys: true,
-              table: "#slider_datatable-responsive",
-              idSrc:  'slider_id',
+              table: "#coordinator_datatable-responsive",
+              idSrc:  'teacher_id',
               fields: [ 
                   {
-                      label: "SLIDER ID:",
-                      name: "slider_id",
+                      label: "ID:",
+                      name: "teacher_id",
+                      type: "text"
+
                   }, 
                   {
-                      label: "MAIN TEXT:",
-                      name: "main_text",
+                      label: "COURSE:",
+                      name: "coordinating_course",
+                      type: "text"
+
                   }, 
                   {
-                      label: "TOP HEADING:",
-                      name: "sub_heading_top",
+                      label: "SEMESTER:",
+                      name: "coordinating_sem",
+                      type: "text"
+
                   }, 
                   {
-                      label: "BOTTOM HEADING:",
-                      name: "sub_heading_bottom",
-                  }, 
-                  {
-                      label: "IMAGE:",
-                      name: "background_img", 
-                      type: "upload"
-                  }, 
-                  {
-                      label: "STATUS:",
-                      name: "status",
-                      type:  "select",
-                      options: [
-                          { label: "published", value: "published" },
-                          { label: "unpublished", value: "unpublished" } 
-                        ]
+                      label: "SECTION:",
+                      name: "coordinating_sec", 
+                      type: "text"
+
                   }
             ]
           } );
 
-          $('#slider_datatable-responsive').DataTable({
+          $('#coordinator_datatable-responsive').DataTable({
               dom: "Bfrtip",
-              ajax: "./php/get_slider_data.php",
+              ajax: "./php/get_coordinator_data.php",
               columns: [
                   { 
-                    data: "slider_id", 
+                    data: "teacher_id", 
                     
                   },
                   { 
-                    data: "main_text",
+                    data: "teacher_name",
+                  },
+                  { 
+                    data: "coordinating_course", 
                     className: 'editable'
                   },
                   { 
-                    data: "sub_heading_top", 
+                    data: "coordinating_sem",
                     className: 'editable'
                   },
                   { 
-                    data: "sub_heading_bottom",
-                    className: 'editable'
-                  },
-                  { 
-                    data: "background_img",
-                    className: 'editable'
-                  },
-                  { 
-                    data: "status", 
+                    data: "coordinating_sec",
                     className: 'editable'
                   }
               ],
               order: [ 0, 'asc' ],
               keys: {
-                  columns: ':not(:first-child)',
+                  columns: [2,3,4],
                   keys: [ 9 ]
               },
                 buttons: [
-                  
+                  { extend:"create", editor:coordinator_editor }
                 ]
           });
 
 
-          $('#slider_datatable-responsive').on( 'click', 'tbody td.editable', function (e) {
-              slider_editor.inline( this, {
+          $('#coordinator_datatable-responsive').on( 'click', 'tbody td.editable', function (e) {
+              coordinator_editor.inline( this, {
                   submitOnBlur: true
               } );
           } );
 
-          $('#slider_datatable-responsive').on( 'key-focus', function ( e, datatable, cell ) {
-              slider_editor.inline( cell.index() , {
-                  
+          $('#coordinator_datatable-responsive').on( 'key-focus', function ( e, datatable, cell ) {
+              coordinator_editor.inline( cell.index() , {
                   submitOnBlur: true
               });
           } );
 
 
 
-          slider_editor.on( 'preSubmit', function ( e, o, action ) {
+          // coordinator_editor.on( 'preSubmit', function ( e, o, action ) {
 
-              if ( action !== 'remove' ) {
+          //     if ( action !== 'remove' ) {
 
-                  var main_text = slider_editor.field( 'main_text' );
-                  var sub_heading_top = slider_editor.field( 'sub_heading_top' );
-                  var sub_heading_bottom = slider_editor.field( 'sub_heading_bottom' );
-                  var background_img = slider_editor.field( 'background_img' ); 
-                  // Only validate user input values - different values indicate that
-                  // the end user has not entered a value
-                  if ( ! main_text.isMultiValue() ) {
-                      if ( ! main_text.val() ) {
-                          main_text.error( 'Value is required' );
-                      }
-                  }
+          //         var main_text = coordinator_editor.field( 'main_text' );
+          //         var sub_heading_top = coordinator_editor.field( 'sub_heading_top' );
+          //         var sub_heading_bottom = coordinator_editor.field( 'sub_heading_bottom' );
+          //         var background_img = coordinator_editor.field( 'background_img' ); 
+          //         // Only validate user input values - different values indicate that
+          //         // the end user has not entered a value
+          //         if ( ! main_text.isMultiValue() ) {
+          //             if ( ! main_text.val() ) {
+          //                 main_text.error( 'Value is required' );
+          //             }
+          //         }
 
-                  if ( ! sub_heading_top.isMultiValue() ) {
-                      if ( ! sub_heading_top.val() ) {
-                          sub_heading_top.error( 'Value is required' );
-                      }
-                  }
+          //         if ( ! sub_heading_top.isMultiValue() ) {
+          //             if ( ! sub_heading_top.val() ) {
+          //                 sub_heading_top.error( 'Value is required' );
+          //             }
+          //         }
 
-                  if ( ! sub_heading_bottom.isMultiValue() ) {
-                      if ( ! sub_heading_bottom.val() ) {
-                          sub_heading_bottom.error( 'Value is required' );
-                      }
-                  }
+          //         if ( ! sub_heading_bottom.isMultiValue() ) {
+          //             if ( ! sub_heading_bottom.val() ) {
+          //                 sub_heading_bottom.error( 'Value is required' );
+          //             }
+          //         }
 
-                  var ext = background_img.val().split('.').pop();
-                  if ( ! background_img.isMultiValue() ) {
-                      if ( ext !== 'jpg' && ext !== 'png' ) {
-                          background_img.error( 'Please upload an image (jpg or png only).' );
-                      }
-                  }
+          //         var ext = background_img.val().split('.').pop();
+          //         if ( ! background_img.isMultiValue() ) {
+          //             if ( ext !== 'jpg' && ext !== 'png' ) {
+          //                 background_img.error( 'Please upload an image (jpg or png only).' );
+          //             }
+          //         }
 
 
-                  // ... additional validation rules
+          //         // ... additional validation rules
        
-                  // If any error was reported, cancel the submission so it can be corrected
-                  if ( this.inError() ) {
-                      return false;
-                  }
-              }
+          //         // If any error was reported, cancel the submission so it can be corrected
+          //         if ( this.inError() ) {
+          //             return false;
+          //         }
+          //     }
 
-          } );
+          // } );
     }
 
     {
-      category_editor = new $.fn.dataTable.Editor( {
-            ajax: "./php/get_category_data.php",
+      faculty_editor = new $.fn.dataTable.Editor( {
+            ajax: "./php/get_faculty_data.php",
             keys: true,
-            table: "#category_datatable-responsive",
-            idSrc:  'category_id',
-            fields: [  {
-                    label: "CATEGORY NAME:",
-                    name: "category_name",
+            table: "#faculty_datatable-responsive",
+            idSrc:  'teacher_id',
+            fields: [  
+                {
+                    label: "NAME:",
+                    name: "teacher_name",
                     type: "text"
                 }, {
-                    label: "CATEGORY DESCRIPTION:",
-                    name: "category_description",
+                    label: "ADDRESS:",
+                    name: "address",
                     type: "textarea"
+                }, {
+                    label: "PHONE:",
+                    name: "contact_no",
+                    type: "text"
+                }, {
+                    label: "EMAIL:",
+                    name: "email",
+                    type: "text"
+                }, {
+                    label: "QUALIFICATION:",
+                    name: "qualification",
+                    type: "text"
+                }, {
+                    label: "DESIGNATION:",
+                    name: "designation",
+                    type: "text"
+                }, {
+                    label: "D.O.J:",
+                    name: "date_of_joining",
+                    type: "text"
                 }
             ]
         } );
 
 
-      $('#category_datatable-responsive').DataTable({
+      $('#faculty_datatable-responsive').DataTable({
           dom: "Bfrtip",
-          ajax: "./php/get_category_data.php",
+          ajax: "./php/get_faculty_data.php",
           columns: [
               { 
-                data: "category_id", 
+                data: "teacher_id", 
                 
               },
               { 
-                data: "category_name",
+                data: "teacher_name",
                 className: 'editable'
               },
               { 
-                data: "category_description", 
+                data: "address", 
                 className: 'editable'
               },
               { 
-                data: "stock",
+                data: "contact_no",
+                className: 'editable'
+              },
+              { 
+                data: "email", 
+                className: 'editable'
+              },
+              { 
+                data: "qualification",
+                className: 'editable'
+              },
+              { 
+                data: "designation", 
+                className: 'editable'
+              },
+              { 
+                data: "date_of_joining",
+                className: 'editable'
               }
           ],
           order: [ 0, 'asc' ],
           keys: {
-              columns: [1,2],
+              columns: ':not(:first-child)',
               keys: [ 9 ]
           },
           buttons: [
-            { extend:"create", editor:category_editor },
+            { extend:"create", editor:faculty_editor }
           ]
       });
 
 
-      $('#category_datatable-responsive').on( 'click', 'tbody td.editable', function (e) {
-          category_editor.inline( this, {
+      $('#faculty_datatable-responsive').on( 'click', 'tbody td.editable', function (e) {
+          faculty_editor.inline( this, {
               submitOnBlur: true
           } );
       } );
 
-      $('#category_datatable-responsive').on( 'key-focus', function ( e, datatable, cell ) {
-          category_editor.inline( cell.index() , {
+      $('#faculty_datatable-responsive').on( 'key-focus', function ( e, datatable, cell ) {
+          faculty_editor.inline( cell.index() , {
               submitOnBlur: true
           });
       } );
 
-      category_editor.on( 'preSubmit', function ( e, o, action ) {
+      // faculty_editor.on( 'preSubmit', function ( e, o, action ) {
 
-          if ( action !== 'remove' ) {
+      //     if ( action !== 'remove' ) {
 
-              var category_name = category_editor.field( 'category_name' );
-              var category_description = category_editor.field( 'category_description' );
+      //         var category_name = category_editor.field( 'category_name' );
+      //         var category_description = category_editor.field( 'category_description' );
               
-              // Only validate user input values - different values indicate that
-              // the end user has not entered a value
-              if ( ! category_name.isMultiValue() ) {
-                  if ( ! category_name.val() ) {
-                      category_name.error( 'Value is required' );
-                  }
-              }
+      //         // Only validate user input values - different values indicate that
+      //         // the end user has not entered a value
+      //         if ( ! category_name.isMultiValue() ) {
+      //             if ( ! category_name.val() ) {
+      //                 category_name.error( 'Value is required' );
+      //             }
+      //         }
 
-              if ( ! category_description.isMultiValue() ) {
-                  if ( ! category_description.val() ) {
-                      category_description.error( 'Value is required' );
-                  }
-              }
+      //         if ( ! category_description.isMultiValue() ) {
+      //             if ( ! category_description.val() ) {
+      //                 category_description.error( 'Value is required' );
+      //             }
+      //         }
 
-              // ... additional validation rules
+      //         // ... additional validation rules
    
-              // If any error was reported, cancel the submission so it can be corrected
-              if ( this.inError() ) {
-                  return false;
-              }
-          }
+      //         // If any error was reported, cancel the submission so it can be corrected
+      //         if ( this.inError() ) {
+      //             return false;
+      //         }
+      //     }
 
-      } );
+      // } );
     }
 
     {
@@ -1047,37 +1109,37 @@
               });
           } );
 
-          // student_editor.on( 'preSubmit', function ( e, o, action ) {
+          student_editor.on( 'preSubmit', function ( e, o, action ) {
 
-          //   if ( action !== 'remove' ) {
+            if ( action !== 'remove' ) {
 
-          //       var tile_main_text = student_editor.field( 'tile_main_text' );
-          //       var top_heading = student_editor.field( 'top_heading' );
+                var tile_main_text = student_editor.field( 'tile_main_text' );
+                var top_heading = student_editor.field( 'top_heading' );
                 
-          //       // Only validate user input values - different values indicate that
-          //       // the end user has not entered a value
-          //       if ( ! tile_main_text.isMultiValue() ) {
-          //           if ( ! tile_main_text.val() ) {
-          //               tile_main_text.error( 'Value is required' );
-          //           }
-          //       }
+                // Only validate user input values - different values indicate that
+                // the end user has not entered a value
+                if ( ! tile_main_text.isMultiValue() ) {
+                    if ( ! tile_main_text.val() ) {
+                        tile_main_text.error( 'Value is required' );
+                    }
+                }
 
-          //       if ( ! top_heading.isMultiValue() ) {
-          //           if ( ! top_heading.val() ) {
-          //               top_heading.error( 'Value is required' );
-          //           }
-          //       }
+                if ( ! top_heading.isMultiValue() ) {
+                    if ( ! top_heading.val() ) {
+                        top_heading.error( 'Value is required' );
+                    }
+                }
 
 
-          //       // ... additional validation rules
+                // ... additional validation rules
      
-          //       // If any error was reported, cancel the submission so it can be corrected
-          //       if ( this.inError() ) {
-          //           return false;
-          //       }
-          //   }
+                // If any error was reported, cancel the submission so it can be corrected
+                if ( this.inError() ) {
+                    return false;
+                }
+            }
 
-          // } );
+          } );
     }
 
     {

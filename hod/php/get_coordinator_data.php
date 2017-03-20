@@ -111,7 +111,7 @@
     {
 
 
-        $query = "SELECT * from category";
+        $query = "SELECT teacher_id,teacher_name,coordinating_course,coordinating_sec,coordinating_sem from teacher_profile WHERE type = 'coordinator'";
 
         $res = $conn -> query($query);
 
@@ -123,9 +123,9 @@
             while ($row = $res -> fetch_assoc()) {
                 # code...
                 $result[] = $row;
-                $arr['label'] = $row['category_name'];
-                $arr['value'] = $row['category_name'];
-                array_push($options, $arr);
+                // $arr['label'] = $row['category_name'];
+                // $arr['value'] = $row['category_name'];
+                // array_push($options, $arr);
 
             }
             
