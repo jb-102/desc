@@ -85,6 +85,8 @@
 
                   <li id="projects_nav"><a class="link"><i class="fa fa-table"></i> Projects </a></li>
 
+                  <li id="seminar_nav"><a class="link"><i class="fa fa-book"></i> Seminars </a></li>
+
                   <li id="classroutine_nav"><a class="link" ><i class="fa fa-bar-chart-o"></i> Class Routine </a></li>
 
                 </ul>
@@ -294,6 +296,34 @@
               </div>
             </div>
 
+             <div hidden  class="row" id="seminar_div">
+
+              <div class="col-md-12 col-sm-12 col-xs-12">
+
+                <div class="x_panel">
+
+                  <div class="x_title">
+                    <h2>Seminars</h2>
+                    <div class="clearfix"></div>
+                  </div>
+
+                  <div class="x_content" style="display: block;">
+                    <table id="seminar_datatable-responsive" class="table table-striped table-bordered dt-responsive wrap" cellspacing="0" width="100%">
+                      <thead>
+                        <tr>
+                          <th>ENROLL</th>
+                          <th>TOPIC NAME</th>
+                          <th>YEAR</th>
+                        </tr>
+                      </thead>
+                    </table>  
+                  </div>
+
+                </div>
+
+              </div>
+            </div>
+
             <div hidden  class="row" id="projects_div">
 
               <div class="col-md-12 col-sm-12 col-xs-12">
@@ -450,7 +480,8 @@
   	$("#attendence_div").slideDown();
     $("#sessional_div").slideUp();
     $("#projects_div").slideUp();
-     $("#classroutine_div").slideUp();
+    $("#classroutine_div").slideUp();
+    $("#seminar_div").slideUp();
     //$("#edit_card_div").slideUp();
     //$("#testimonials_div").slideUp();
 
@@ -461,10 +492,11 @@
     $(".link").removeClass('active');
     $("#sessionals_nav .link").addClass('active');
     $("#content_main").slideDown();
+     $("#attendence_div").slideUp();
     $("#sessional_div").slideDown();
     $("#projects_div").slideUp();
      $("#classroutine_div").slideUp();
-     $("#attendence_div").slideUp();
+     $("#seminar_div").slideUp();
     //$("#edit_card_div").slideUp();
     //$("#testimonials_div").slideUp();
 
@@ -475,26 +507,40 @@
     $(".link").removeClass('active');
     $("#projects_nav .link").addClass('active');
     $("#content_main").slideDown();
-    $("#projects_div").slideDown();
-     $("#classroutine_div").slideUp();
      $("#sessional_div").slideUp();
+    $("#projects_div").slideDown();
+    $("#classroutine_div").slideUp();
      $("#attendence_div").slideUp();
+     $("#seminar_div").slideUp();
 
   });  
 
-    $("#classroutine_nav").click(function(){
+  $("#classroutine_nav").click(function(){
 
     $(".link").removeClass('active');
     $("#classroutine_nav .link").addClass('active');
     $("#content_main").slideDown();
-   // $("#category_div").slideUp();
-    $("#classroutine_div").slideDown();
     $("#projects_div").slideUp();
+    $("#classroutine_div").slideDown();
     $("#sessional_div").slideUp();
     $("#attendence_div").slideUp();
-    //$("#testimonials_div").slideUp();
+    $("#seminar_div").slideUp();
+    
 
-  });  
+  }); 
+
+   $("#seminar_nav").click(function(){
+
+    $(".link").removeClass('active');
+    $("#seminar_nav .link").addClass('active');
+    $("#content_main").slideDown()
+    $("#classroutine_div").slideUp();;
+    $("#seminar_div").slideDown();
+    $("#projects_div").slideUp();
+    $("#attendence_div").slideUp();
+    
+
+  }); 
 </script>
 
 <!-- Autosize -->
@@ -655,291 +701,7 @@
           } );
     }
 
-    {
-      category_editor = new $.fn.dataTable.Editor( {
-            ajax: "./php/get_category_data.php",
-            keys: true,
-            table: "#category_datatable-responsive",
-            idSrc:  'category_id',
-            fields: [  {
-                    label: "CATEGORY NAME:",
-                    name: "category_name",
-                    type: "text"
-                }, {
-                    label: "CATEGORY DESCRIPTION:",
-                    name: "category_description",
-                    type: "textarea"
-                }
-            ]
-        } );
-
-
-      $('#category_datatable-responsive').DataTable({
-          dom: "Bfrtip",
-          ajax: "./php/get_category_data.php",
-          columns: [
-              { 
-                data: "category_id", 
-                
-              },
-              { 
-                data: "category_name",
-                className: 'editable'
-              },
-              { 
-                data: "category_description", 
-                className: 'editable'
-              },
-              { 
-                data: "stock",
-              }
-          ],
-          order: [ 0, 'asc' ],
-          keys: {
-              columns: [1,2],
-              keys: [ 9 ]
-          },
-          buttons: [
-            { extend:"create", editor:category_editor },
-          ]
-      });
-
-
-      $('#category_datatable-responsive').on( 'click', 'tbody td.editable', function (e) {
-          category_editor.inline( this, {
-              submitOnBlur: true
-          } );
-      } );
-
-      $('#category_datatable-responsive').on( 'key-focus', function ( e, datatable, cell ) {
-          category_editor.inline( cell.index() , {
-              submitOnBlur: true
-          });
-      } );
-
-      category_editor.on( 'preSubmit', function ( e, o, action ) {
-
-          if ( action !== 'remove' ) {
-
-              var category_name = category_editor.field( 'category_name' );
-              var category_description = category_editor.field( 'category_description' );
-              
-              // Only validate user input values - different values indicate that
-              // the end user has not entered a value
-              if ( ! category_name.isMultiValue() ) {
-                  if ( ! category_name.val() ) {
-                      category_name.error( 'Value is required' );
-                  }
-              }
-
-              if ( ! category_description.isMultiValue() ) {
-                  if ( ! category_description.val() ) {
-                      category_description.error( 'Value is required' );
-                  }
-              }
-
-              // ... additional validation rules
    
-              // If any error was reported, cancel the submission so it can be corrected
-              if ( this.inError() ) {
-                  return false;
-              }
-          }
-
-      } );
-    }
-
-   /* {
-      sessional_editor = new $.fn.dataTable.Editor( {
-        ajax: "./php/get_sessional_data.php",
-        keys: true,
-        table: "#sessional_awards_datatable-responsive",
-        idSrc:  'enroll',
-        fields: [ {
-                label: "ENROLL:",
-                name: "enroll",
-                type: "text"
-            }, {
-                label: "NAME:",
-                name: "name",
-                type: "text"
-            }, {
-                label: "SESSIONAL:",
-                name: "sessional",
-                type: "text"
-            }, {
-                label: "CARD CATEGORY:",
-                name: "card_category",
-                type: "select",
-            }, {
-                label: "CARd IMAGE:",
-                name: "card_image", 
-                type: "upload"
-            }, {
-                label: "CARD ON HOME:",
-                name: "on_home",
-                type:  "select",
-                options: [
-                    { label: "no", value: "no" },
-                    { label: "yes", value: "yes" } 
-                  ]
-            }, {
-                label: "LATEST:",
-                name: "is_latest",
-                type:  "select",
-            }
-          ]
-      });
-
-
-      $.post("./php/get_category_data.php",{getOptions:"yes"},function(data){
-
-      card_editor.field('card_category').update(data);
-
-      },"json");
-
-
-      card_editor.on('initCreate',function(){
-
-        card_editor.field('is_latest').hide();
-        card_editor.field('on_home').hide();
-
-      });
-
-
-      $('#card_datatable-responsive').DataTable({
-          dom: "Bfrtip",
-          ajax: "./php/get_card_data.php",
-          columns: [  
-              {
-                data: null,
-                defaultContent: '',
-                className: 'select-checkbox',
-                orderable: false
-              },
-              { 
-                data: "card_name",
-                className: 'editable'
-              },
-              { 
-                data: "card_description", 
-                className: 'editable'
-              },
-              { 
-                data: "card_price",
-                className: 'editable'
-              },
-              { 
-                data: "card_category",
-                className: 'editable'
-              },
-              { 
-                data: "card_image", 
-                className: 'editable'
-              },
-              { 
-                data: "on_home", 
-                className: 'editable'
-              },
-              { 
-                data: "is_latest", 
-                className: 'editable'
-              }
-          ],
-          select: {
-            style:    'os',
-            selector: 'td:first-child'
-          },
-          order: [ 1, 'asc' ],
-          keys: {
-              columns: ':not(:first-child)', 
-              keys: [ 9 ]
-          },
-          buttons: [
-              {extend:"create", editor:card_editor},
-              {extend:"remove", editor:card_editor}
-          ]
-      });
-
-
-      $('#card_datatable-responsive').on( 'click', 'tbody td.editable', function (e) {
-
-          $.post("./php/get_card_data.php",{getLatest:"yes"},function(data){
-
-          card_editor.field('is_latest').update(data);
-
-          },"json");
-
-
-          card_editor.inline( this, {
-              submitOnBlur: true
-          } );
-      } );
-
-      $('#card_datatable-responsive').on( 'key-focus', function ( e, datatable, cell ) {
-
-          $.post("./php/get_card_data.php",{getLatest:"yes"},function(data){
-
-          card_editor.field('is_latest').update(data);
-
-          },"json");
-
-          card_editor.inline( cell.index() , {
-              submitOnBlur: true
-          });
-      } );
-
-
-
-      card_editor.on( 'preSubmit', function ( e, o, action ) {
-
-          if ( action !== 'remove' ) {
-
-              var card_name = card_editor.field( 'card_name' );
-              var card_description = card_editor.field( 'card_description' );
-              var card_price = card_editor.field( 'card_price' );
-              var card_image = card_editor.field( 'card_image' ); 
-              // Only validate user input values - different values indicate that
-              // the end user has not entered a value
-              if ( ! card_name.isMultiValue() ) {
-                  if ( ! card_name.val() ) {
-                      card_name.error( 'Value is required' );
-                  }
-              }
-
-              if ( ! card_description.isMultiValue() ) {
-                  if ( ! card_description.val() ) {
-                      card_description.error( 'Value is required' );
-                  }
-              }
-
-              if ( ! card_price.isMultiValue() ) {
-                  if ( ! card_price.val() ) {
-                      card_price.error( 'Value is required' );
-                  }
-              }
-
-              var ext = card_image.val().split('.').pop();
-              if ( ! card_image.isMultiValue() ) {
-                  if ( ext !== 'jpg' && ext !== 'png' ) {
-                      card_image.error( 'Please upload an image (jpg or png only).' );
-                  }
-              }
-
-
-              // ... additional validation rules
-   
-              // If any error was reported, cancel the submission so it can be corrected
-              if ( this.inError() ) {
-                  return false;
-              }
-          }
-
-      } );
-
-    }
-*/
-
 //timetable editor and data table
        {
           attendence_editor = new $.fn.dataTable.Editor( {
@@ -1032,13 +794,7 @@
                     className: 'editable'
                   },
 
-
-
-
-
-
-                 
-              ],
+           ],
               order: [ 0, 'asc' ],
               keys: {
                   columns: ':not(:first-child)',
@@ -1503,6 +1259,114 @@
 
            } );
     }
+
+
+
+//seminar editor and table
+    {
+          seminar_editor = new $.fn.dataTable.Editor( {
+              ajax: "./php/get_seminar_data.php",
+              keys: true,
+              table: "#seminar_datatable-responsive",
+              idSrc:  'enroll',
+              fields: [ 
+                  {
+                      label: "ENROLL:",
+                      name: "enroll",
+                      type: "text"
+                  }, 
+                  {
+                      label: "TOPIC NAME:",
+                      name: "topic_name",
+                      type: "text"
+                  }, 
+                  {
+                      label: "YEAR:",
+                      name: "semester",
+                      type: "text"
+                  }, 
+                 
+               ]
+          } );
+
+
+          $('#seminar_datatable-responsive').DataTable({
+              dom: "Bfrtip",
+              ajax: "./php/get_seminar_data.php",
+              columns: [
+                  { 
+                    data: "enroll", 
+                    
+                  },
+                  { 
+                    data: "topic_name",
+                    className: 'editable'
+                  },
+                  { 
+                    data: "year", 
+                    className: 'editable'
+                  },
+                  
+                  
+              ],
+              order: [ 0, 'asc' ],
+              keys: {
+                  columns: ':not(:first-child)',
+                  keys: [ 9 ]
+              },
+              responsive: 'true',
+              buttons: [
+                { extend:"create", editor:seminar_editor }
+              ]
+          });
+
+
+          $('#seminar_datatable-responsive').on( 'click', 'tbody td.editable', function (e) {
+              seminar_editor.inline( this, {
+                   submitOnBlur: true
+              } );
+          } );
+
+          $('#seminar_datatable-responsive').on( 'key-focus', function ( e, datatable, cell ) {
+              seminar_editor.inline( cell.index() , {
+                  submitOnBlur: true
+              });
+          } );
+
+          seminar_editor.on( 'preSubmit', function ( e, o, action ) {
+
+            if ( action !== 'remove' ) {
+
+              var topic_name = seminar_editor.field( 'topic_name' );
+              var year = seminar_editor.field( 'year' );
+                
+          //       // Only validate user input values - different values indicate that
+          //       // the end user has not entered a value
+                if ( ! topic_name.isMultiValue() ) {
+                     if ( ! topic_name.val() ) {
+                         topic_name.error( 'Value is required' );
+                     }
+                 }
+
+                 if ( ! year.isMultiValue() ) {
+                   if ( ! year.val() ) {
+                       year.error( 'Value is required' );
+                     }
+                 }
+
+                 
+
+          //       // ... additional validation rules
+     
+              // If any error was reported, cancel the submission so it can be corrected
+                 if ( this.inError() ) {
+                    return false;
+                 }
+             }
+
+           } );
+    }
+
       //projects editor and datatable
     {
           projects_editor = new $.fn.dataTable.Editor( {
