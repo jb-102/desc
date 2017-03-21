@@ -79,13 +79,13 @@
                 <ul class="nav side-menu">
                   <li id="home_nav"><a class="link active"><i class="fa fa-home"></i> Home </a></li>
 
-                  <li id="coordinator_nav"><a class="link"><i class="fa fa-edit"></i> My Co-ordinators </a></li>
+                  <li id="coordinator_nav"><a class="link"><i class="fa fa-edit"></i> My Coordinators </a></li>
 
                   <li id="faculty_nav"><a class="link"><i class="fa fa-desktop"></i> My Faculty </a></li>
 
-                  <li id="student_nav"><a class="link"><i class="fa fa-table"></i> My Student </a></li>
+                  <li id="student_nav"><a class="link"><i class="fa fa-table"></i> My Students </a></li>
 
-                  <li id="greviences_nav"><a class="link" ><i class="fa fa-bar-chart-o"></i> Greviences </a></li>
+                  <li id="greviences_nav"><a class="link" ><i class="fa fa-bar-chart-o"></i> Greveinces </a></li>
 
                 </ul>
               </div>
@@ -137,7 +137,7 @@
             <!-- top menu tabs -->
             <div class="top_menu" >
 
-              <div class="animated flipInY col-lg-3 col-md-6 col-sm-6 col-xs-12">
+              <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
                 <div class="tile-stats">
                   <div class="icon"><i class="fa fa-plus-square"></i>
                   </div>
@@ -150,7 +150,7 @@
                 </div>
               </div>
 
-              <div class="animated flipInY col-lg-3 col-md-6 col-sm-6 col-xs-12">
+              <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
                 <div class="tile-stats">
                   <div class="icon"><i class="fa fa-plus-square"></i>
                   </div>
@@ -163,7 +163,7 @@
                 </div>
               </div>
 
-              <div class="animated flipInY col-lg-3 col-md-6 col-sm-6 col-xs-12">
+              <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
                 <div class="tile-stats">
                   <div class="icon"><i class="fa fa-plus-square"></i>
                   </div>
@@ -176,7 +176,7 @@
                 </div>
               </div>
 
-              <div class="animated flipInY col-lg-3 col-md-6 col-sm-6 col-xs-12">
+              <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
                 <div class="tile-stats">
                   <div class="icon"><i class="fa fa-plus-square"></i>
                   </div>
@@ -277,7 +277,6 @@
                           <th>ENROLL</th>
                           <th>NAME</th>
                           <th>SEMESTER</th>
-                          <th>BRANCH</th>
                           <th>COURSE</th>
                           <th>ADDRESS</th>
                           <th>PHONE</th>
@@ -308,7 +307,7 @@
                   </div>
 
                   <div class="x_content" style="display: block;">
-                    <table id="students_datatable-responsive" class="table table-striped table-bordered dt-responsive wrap" cellspacing="0" width="100%">
+                    <table id="grevience_datatable-responsive" class="table table-striped table-bordered dt-responsive wrap" cellspacing="0" width="100%">
                       <thead>
                         <tr>
                           <th>ID</th>
@@ -383,56 +382,8 @@
     
 
 
-
-
-<!-- file extention validation -->
-<script>
-    $(document).ready(function() {
-        window.ParsleyValidator
-            .addValidator('fileextension', function (value, requirement) {
-                // the value contains the file path, so we can pop the extension
-                var fileExtension = value.split('.').pop();
-                var extent = requirement.split(" ");
-
-                return fileExtension === extent[0] || fileExtension === extent[1];
-            }, 32)
-            .addMessage('en', 'fileextension', 'The extension doesn\'t match the required');
-
-        $("#slider_form").parsley();
-        $("#card_form").parsley();
-        $("#tile_form").parsley();
-        $("#testimonial_form").parsley();
-    });
-</script>
-
-
-<!-- dropdown validation -->
-<script>
-    $(document).ready(function() {
-        window.ParsleyValidator
-            .addValidator('dropdown', function (value, requirement) {
-                // the value contains the file path, so we can pop the extension
-                if (requirement) 
-                {
-                  return value != -1;
-                }
-
-            }, 32)
-            .addMessage('en', 'dropdown', 'Please select a valid option');
-
-        $("#slider_form").parsley();
-        $("#card_form").parsley();
-        $("#tile_form").parsley();
-        $("#testimonial_form").parsley();
-    });
-</script>
-
-
-
-
 <!-- collapsable content -->
 <script>
-
 
   $("#home_nav").click(function(){
 
@@ -450,7 +401,6 @@
     $("#faculty_div").slideUp();
     $("#student_div").slideUp();
     $("#grevience_div").slideUp();
-
   });
 
   $("#faculty_nav").click(function(){
@@ -462,7 +412,6 @@
     $("#faculty_div").slideDown();
     $("#student_div").slideUp();
     $("#grevience_div").slideUp();
-
   });
 
   $("#student_nav").click(function(){
@@ -474,10 +423,9 @@
     $("#faculty_div").slideUp();
     $("#student_div").slideDown();
     $("#grevience_div").slideUp();
-
   });  
 
-    $("#greviences_nav").click(function(){
+  $("#greviences_nav").click(function(){
 
     $(".link").removeClass('active');
     $("#greviences_nav .link").addClass('active');
@@ -486,8 +434,8 @@
     $("#faculty_div").slideUp();
     $("#student_div").slideUp();
     $("#grevience_div").slideDown();
-
   });  
+
 </script>
 
 <!-- Autosize -->
@@ -506,6 +454,7 @@
 
   $(document).ready(function() {
 
+
     {
           coordinator_editor = new $.fn.dataTable.Editor( {
               ajax: "./php/get_coordinator_data.php",
@@ -516,28 +465,66 @@
                   {
                       label: "ID:",
                       name: "teacher_id",
-                      type: "text"
-
+                      type: "select",
+                      options: []
                   }, 
                   {
                       label: "COURSE:",
                       name: "coordinating_course",
-                      type: "text"
-
+                      type: "select",
+                      options: [
+                        { label: "BE", value: "BE" },
+                        { label: "DIPLOMA", value: "DIPLOMA" }
+                      ]
                   }, 
                   {
                       label: "SEMESTER:",
                       name: "coordinating_sem",
-                      type: "text"
+                      type: "select",
+                      options: [
+                        { label: "1st", value: "1" },
+                        { label: "2nd", value: "2" },
+                        { label: "3rd", value: "3" },
+                        { label: "4th", value: "4" },
+                        { label: "5th", value: "5" },
+                        { label: "6th", value: "6" },
+                        { label: "7th", value: "7" },
+                        { label: "8th", value: "8" }
+                      ]
 
                   }, 
                   {
                       label: "SECTION:",
                       name: "coordinating_sec", 
-                      type: "text"
+                      type: "select",
+                      options: [
+                        { label: "A", value: "A" },
+                        { label: "B", value: "B" }
+                      ]
 
                   }
             ]
+          } );
+
+          $.post("./php/get_extras.php",{get:"teacher_ids"},function(data){
+
+            coordinator_editor.field('teacher_id').update(data);
+
+          },"json");
+
+          coordinator_editor.dependent( 'coordinating_course', function ( val ) {
+              
+              if (val === 'BE') 
+              {
+                coordinator_editor.field('coordinating_sem').update([{ label: "1st", value: "1" },{ label: "2nd", value: "2" },{ label: "3rd", value: "3" },{ label: "4th", value: "4" },{ label: "5th", value: "5" },{ label: "6th", value: "6" },{ label: "7th", value: "7" },{ label: "8th", value: "8" }]);
+              }
+              else
+              {
+                coordinator_editor.field('coordinating_sem').update([{ label: "1st", value: "1" },{ label: "2nd", value: "2" },{ label: "3rd", value: "3" },{ label: "4th", value: "4" },{ label: "5th", value: "5" },{ label: "6th", value: "6" }]);
+              }
+
+              return true;
+
           } );
 
           $('#coordinator_datatable-responsive').DataTable({
@@ -569,8 +556,14 @@
                   columns: [2,3,4],
                   keys: [ 9 ]
               },
+              select: {
+                style:    'os',
+                selector: 'td:first-child'
+              },
+              responsive: true,
                 buttons: [
-                  { extend:"create", editor:coordinator_editor }
+                  { extend:"create", editor:coordinator_editor },
+                  { extend:"remove", editor:coordinator_editor }
                 ]
           });
 
@@ -589,51 +582,50 @@
 
 
 
-          // coordinator_editor.on( 'preSubmit', function ( e, o, action ) {
+          coordinator_editor.on( 'preSubmit', function ( e, o, action ) {
 
-          //     if ( action !== 'remove' ) {
+              if ( action !== 'remove' ) {
 
-          //         var main_text = coordinator_editor.field( 'main_text' );
-          //         var sub_heading_top = coordinator_editor.field( 'sub_heading_top' );
-          //         var sub_heading_bottom = coordinator_editor.field( 'sub_heading_bottom' );
-          //         var background_img = coordinator_editor.field( 'background_img' ); 
-          //         // Only validate user input values - different values indicate that
-          //         // the end user has not entered a value
-          //         if ( ! main_text.isMultiValue() ) {
-          //             if ( ! main_text.val() ) {
-          //                 main_text.error( 'Value is required' );
-          //             }
-          //         }
+                  var teacher_id = coordinator_editor.field( 'teacher_id' );
+                  var coordinating_course = coordinator_editor.field( 'coordinating_course' );
+                  var coordinating_sem = coordinator_editor.field( 'coordinating_sem' );
+                  var coordinating_sec = coordinator_editor.field( 'coordinating_sec' ); 
+                  // Only validate user input values - different values indicate that
+                  // the end user has not entered a value
+                  if ( ! teacher_id.isMultiValue() ) {
+                      if (teacher_id.val() == -1) {
+                          teacher_id.error( 'Value is required' );
+                      }
+                  }
 
-          //         if ( ! sub_heading_top.isMultiValue() ) {
-          //             if ( ! sub_heading_top.val() ) {
-          //                 sub_heading_top.error( 'Value is required' );
-          //             }
-          //         }
+                  if ( ! coordinating_course.isMultiValue() ) {
+                      if (coordinating_course.val() == -1) {
+                          coordinating_course.error( 'Value is required' );
+                      }
+                  }
 
-          //         if ( ! sub_heading_bottom.isMultiValue() ) {
-          //             if ( ! sub_heading_bottom.val() ) {
-          //                 sub_heading_bottom.error( 'Value is required' );
-          //             }
-          //         }
+                  if ( ! coordinating_sem.isMultiValue() ) {
+                      if (coordinating_sem.val() == -1) {
+                          coordinating_sem.error( 'Value is required' );
+                      }
+                  }
 
-          //         var ext = background_img.val().split('.').pop();
-          //         if ( ! background_img.isMultiValue() ) {
-          //             if ( ext !== 'jpg' && ext !== 'png' ) {
-          //                 background_img.error( 'Please upload an image (jpg or png only).' );
-          //             }
-          //         }
+                  if ( ! coordinating_sec.isMultiValue() ) {
+                      if (coordinating_sec.val() == -1) {
+                          coordinating_sec.error( 'Value is required' );
+                      }
+                  }
 
 
-          //         // ... additional validation rules
+                  // ... additional validation rules
        
-          //         // If any error was reported, cancel the submission so it can be corrected
-          //         if ( this.inError() ) {
-          //             return false;
-          //         }
-          //     }
+                  // If any error was reported, cancel the submission so it can be corrected
+                  if ( this.inError() ) {
+                      return false;
+                  }
+              }
 
-          // } );
+          } );
     }
 
     {
@@ -718,6 +710,7 @@
               columns: ':not(:first-child)',
               keys: [ 9 ]
           },
+          responsive: true,
           buttons: [
             { extend:"create", editor:faculty_editor }
           ]
@@ -736,215 +729,62 @@
           });
       } );
 
-      // faculty_editor.on( 'preSubmit', function ( e, o, action ) {
-
-      //     if ( action !== 'remove' ) {
-
-      //         var category_name = category_editor.field( 'category_name' );
-      //         var category_description = category_editor.field( 'category_description' );
-              
-      //         // Only validate user input values - different values indicate that
-      //         // the end user has not entered a value
-      //         if ( ! category_name.isMultiValue() ) {
-      //             if ( ! category_name.val() ) {
-      //                 category_name.error( 'Value is required' );
-      //             }
-      //         }
-
-      //         if ( ! category_description.isMultiValue() ) {
-      //             if ( ! category_description.val() ) {
-      //                 category_description.error( 'Value is required' );
-      //             }
-      //         }
-
-      //         // ... additional validation rules
-   
-      //         // If any error was reported, cancel the submission so it can be corrected
-      //         if ( this.inError() ) {
-      //             return false;
-      //         }
-      //     }
-
-      // } );
-    }
-
-    {
-      card_editor = new $.fn.dataTable.Editor( {
-        ajax: "./php/get_card_data.php",
-        keys: true,
-        table: "#card_datatable-responsive",
-        idSrc:  'card_id',
-        fields: [ {
-                label: "CARD NAME:",
-                name: "card_name",
-                type: "text"
-            }, {
-                label: "CARD DESCRIPTION:",
-                name: "card_description",
-                type: "textarea"
-            }, {
-                label: "CARD PRICE:",
-                name: "card_price",
-                type: "text"
-            }, {
-                label: "CARD CATEGORY:",
-                name: "card_category",
-                type: "select",
-            }, {
-                label: "CARd IMAGE:",
-                name: "card_image", 
-                type: "upload"
-            }, {
-                label: "CARD ON HOME:",
-                name: "on_home",
-                type:  "select",
-                options: [
-                    { label: "no", value: "no" },
-                    { label: "yes", value: "yes" } 
-                  ]
-            }, {
-                label: "LATEST:",
-                name: "is_latest",
-                type:  "select",
-            }
-          ]
-      });
-
-
-      $.post("./php/get_category_data.php",{getOptions:"yes"},function(data){
-
-      card_editor.field('card_category').update(data);
-
-      },"json");
-
-
-      card_editor.on('initCreate',function(){
-
-        card_editor.field('is_latest').hide();
-        card_editor.field('on_home').hide();
-
-      });
-
-
-      $('#card_datatable-responsive').DataTable({
-          dom: "Bfrtip",
-          ajax: "./php/get_card_data.php",
-          columns: [  
-              {
-                data: null,
-                defaultContent: '',
-                className: 'select-checkbox',
-                orderable: false
-              },
-              { 
-                data: "card_name",
-                className: 'editable'
-              },
-              { 
-                data: "card_description", 
-                className: 'editable'
-              },
-              { 
-                data: "card_price",
-                className: 'editable'
-              },
-              { 
-                data: "card_category",
-                className: 'editable'
-              },
-              { 
-                data: "card_image", 
-                className: 'editable'
-              },
-              { 
-                data: "on_home", 
-                className: 'editable'
-              },
-              { 
-                data: "is_latest", 
-                className: 'editable'
-              }
-          ],
-          select: {
-            style:    'os',
-            selector: 'td:first-child'
-          },
-          order: [ 1, 'asc' ],
-          keys: {
-              columns: ':not(:first-child)', 
-              keys: [ 9 ]
-          },
-          buttons: [
-              {extend:"create", editor:card_editor},
-              {extend:"remove", editor:card_editor}
-          ]
-      });
-
-
-      $('#card_datatable-responsive').on( 'click', 'tbody td.editable', function (e) {
-
-          $.post("./php/get_card_data.php",{getLatest:"yes"},function(data){
-
-          card_editor.field('is_latest').update(data);
-
-          },"json");
-
-
-          card_editor.inline( this, {
-              submitOnBlur: true
-          } );
-      } );
-
-      $('#card_datatable-responsive').on( 'key-focus', function ( e, datatable, cell ) {
-
-          $.post("./php/get_card_data.php",{getLatest:"yes"},function(data){
-
-          card_editor.field('is_latest').update(data);
-
-          },"json");
-
-          card_editor.inline( cell.index() , {
-              submitOnBlur: true
-          });
-      } );
-
-
-
-      card_editor.on( 'preSubmit', function ( e, o, action ) {
+      faculty_editor.on( 'preSubmit', function ( e, o, action ) {
 
           if ( action !== 'remove' ) {
 
-              var card_name = card_editor.field( 'card_name' );
-              var card_description = card_editor.field( 'card_description' );
-              var card_price = card_editor.field( 'card_price' );
-              var card_image = card_editor.field( 'card_image' ); 
+              var teacher_name = faculty_editor.field( 'teacher_name' );
+              var address = faculty_editor.field( 'address' );
+              var contact_no = faculty_editor.field( 'contact_no' );
+              var email = faculty_editor.field( 'email' );
+              var qualification = faculty_editor.field( 'qualification' );
+              var designation = faculty_editor.field( 'designation' );
+              var date_of_joining = faculty_editor.field( 'date_of_joining' );
+              
               // Only validate user input values - different values indicate that
               // the end user has not entered a value
-              if ( ! card_name.isMultiValue() ) {
-                  if ( ! card_name.val() ) {
-                      card_name.error( 'Value is required' );
+  
+              if ( ! teacher_name.isMultiValue() ) {
+                  if ( ! teacher_name.val() ) {
+                      teacher_name.error( 'Value is required' );
                   }
               }
 
-              if ( ! card_description.isMultiValue() ) {
-                  if ( ! card_description.val() ) {
-                      card_description.error( 'Value is required' );
+              if ( ! address.isMultiValue() ) {
+                  if ( ! address.val() ) {
+                      address.error( 'Value is required' );
                   }
               }
 
-              if ( ! card_price.isMultiValue() ) {
-                  if ( ! card_price.val() ) {
-                      card_price.error( 'Value is required' );
+              if ( ! contact_no.isMultiValue() ) {
+                  if ( ! contact_no.val() ) {
+                      contact_no.error( 'Value is required' );
                   }
               }
 
-              var ext = card_image.val().split('.').pop();
-              if ( ! card_image.isMultiValue() ) {
-                  if ( ext !== 'jpg' && ext !== 'png' ) {
-                      card_image.error( 'Please upload an image (jpg or png only).' );
+              if ( ! email.isMultiValue() ) {
+                  if ( ! email.val() ) {
+                      email.error( 'Value is required' );
                   }
               }
 
+              if ( ! qualification.isMultiValue() ) {
+                  if ( ! qualification.val() ) {
+                      qualification.error( 'Value is required' );
+                  }
+              }
+
+              if ( ! designation.isMultiValue() ) {
+                  if ( ! designation.val() ) {
+                      designation.error( 'Value is required' );
+                  }
+              }
+
+              if ( ! date_of_joining.isMultiValue() ) {
+                  if ( ! date_of_joining.val() ) {
+                      date_of_joining.error( 'Value is required' );
+                  }
+              }
 
               // ... additional validation rules
    
@@ -978,12 +818,7 @@
                       label: "SEMESTER:",
                       name: "semester",
                       type: "text"
-                  }, 
-                  {
-                      label: "BRANCH:",
-                      name: "branch",
-                      type: "text"
-                  }, 
+                  },  
                   {
                       label: "COURSE:",
                       name: "course", 
@@ -1045,11 +880,6 @@
                   },
                   
                   { 
-                    data: "branch",
-                    className: 'editable'
-                  },
-
-                  { 
                     data: "course",
                     className: 'editable'
                   },
@@ -1090,7 +920,7 @@
                   columns: ':not(:first-child)',
                   keys: [ 9 ]
               },
-              responsive: 'true',
+              responsive: true,
               buttons: [
                 
               ]
@@ -1099,177 +929,123 @@
 
           $('#students_datatable-responsive').on( 'click', 'tbody td.editable', function (e) {
               student_editor.inline( this, {
-                  // submitOnBlur: true
+                  submitOnBlur: true
               } );
           } );
 
           $('#students_datatable-responsive').on( 'key-focus', function ( e, datatable, cell ) {
               student_editor.inline( cell.index() , {
-                  // submitOnBlur: true
+                  submitOnBlur: true
               });
           } );
 
-          student_editor.on( 'preSubmit', function ( e, o, action ) {
+          // faculty_editor.on( 'preSubmit', function ( e, o, action ) {
 
-            if ( action !== 'remove' ) {
+          //   if ( action !== 'remove' ) {
 
-                var tile_main_text = student_editor.field( 'tile_main_text' );
-                var top_heading = student_editor.field( 'top_heading' );
-                
-                // Only validate user input values - different values indicate that
-                // the end user has not entered a value
-                if ( ! tile_main_text.isMultiValue() ) {
-                    if ( ! tile_main_text.val() ) {
-                        tile_main_text.error( 'Value is required' );
-                    }
-                }
+          //       var enroll = faculty_editor.field( 'enroll' );
+          //       var name = faculty_editor.field( 'name' );
+          //       var semester = faculty_editor.field( 'semester' );
+          //       var course = faculty_editor.field( 'course' );
+          //       var address = faculty_editor.field( 'address' );
+          //       var contact_no = faculty_editor.field( 'contact_no' );
+          //       var email = faculty_editor.field( 'email' );
+          //       var reg_no = faculty_editor.field( 'reg_no' );
+          //       var batch = faculty_editor.field( 'batch' );
 
-                if ( ! top_heading.isMultiValue() ) {
-                    if ( ! top_heading.val() ) {
-                        top_heading.error( 'Value is required' );
-                    }
-                }
+          //       // Only validate user input values - different values indicate that
+          //       // the end user has not entered a value
+    
+          //       if ( ! enroll.isMultiValue() ) {
+          //           if ( ! enroll.val() ) {
+          //               enroll.error( 'Value is required' );
+          //           }
+          //       }
+
+          //       if ( ! name.isMultiValue() ) {
+          //           if ( ! name.val() ) {
+          //               name.error( 'Value is required' );
+          //           }
+          //       }
+
+          //       if ( ! semester.isMultiValue() ) {
+          //           if ( ! semester.val() ) {
+          //               semester.error( 'Value is required' );
+          //           }
+          //       }
+
+          //       if ( ! course.isMultiValue() ) {
+          //           if ( ! course.val() ) {
+          //               course.error( 'Value is required' );
+          //           }
+          //       }
+
+          //       if ( ! address.isMultiValue() ) {
+          //           if ( ! address.val() ) {
+          //               address.error( 'Value is required' );
+          //           }
+          //       }
+
+          //       if ( ! contact_no.isMultiValue() ) {
+          //           if ( ! contact_no.val() ) {
+          //               contact_no.error( 'Value is required' );
+          //           }
+          //       }
+
+          //       if ( ! email.isMultiValue() ) {
+          //           if ( ! email.val() ) {
+          //               email.error( 'Value is required' );
+          //           }
+          //       }
+
+          //       if ( ! reg_no.isMultiValue() ) {
+          //           if ( ! reg_no.val() ) {
+          //               reg_no.error( 'Value is required' );
+          //           }
+          //       }
+
+          //       if ( ! batch.isMultiValue() ) {
+          //           if ( ! batch.val() ) {
+          //               batch.error( 'Value is required' );
+          //           }
+          //       }
 
 
-                // ... additional validation rules
+          //       // ... additional validation rules
      
-                // If any error was reported, cancel the submission so it can be corrected
-                if ( this.inError() ) {
-                    return false;
-                }
-            }
+          //       // If any error was reported, cancel the submission so it can be corrected
+          //       if ( this.inError() ) {
+          //           return false;
+          //       }
+          //   }
 
-          } );
+          // } );
     }
 
     {
-          testimonials_editor = new $.fn.dataTable.Editor( {
-              ajax: "./php/get_testimonials_data.php",
-              keys: true,
-              table: "#testimonials_datatable-responsive",
-              idSrc:  'testimonial_id',
-              fields: [ {
-                      label: "TILE ID:",
-                      name: "testimonial_id",
-                      type: "text"
-                  }, {
-                      label: "CUSTOMER NAME:",
-                      name: "customer_name",
-                      type: "text"
-                  }, {
-                      label: "CUSTOMER MESSAGE:",
-                      name: "customer_message",
-                      type: "text"
-                  }, {
-                      label: "CUSTOMER IMAGE:",
-                      name: "customer_image", 
-                      type: "upload"
-                  }, {
-                      label: "ON HOME:",
-                      name: "testimonial_on_home", 
-                      type: "select",
-                      options: [
-                        { label: "no", value: "no" },
-                        { label: "yes", value: "yes" }
-                      ]
 
-                  }
-              ]
-          } );
-
-
-          $('#testimonials_datatable-responsive').DataTable({
+          $('#grevience_datatable-responsive').DataTable({
               dom: "Bfrtip",
-              ajax: "./php/get_testimonials_data.php",
+              ajax: "./php/get_grevience_data.php",
               columns: [
                   { 
-                    data: "testimonial_id", 
+                    data: "grevience_id", 
                     
                   },
                   { 
-                    data: "customer_name",
-                    className: 'editable'
+                    data: "grevience_subject",
                   },
                   { 
-                    data: "customer_message", 
-                    className: 'editable'
-                  },  
-                  { 
-                    data: "customer_image",
-                    className: 'editable'
-                  },
-                  { 
-                    data: "testimonial_on_home",
-                    className: 'editable'
+                    data: "grevience_message", 
                   }
               ],
-              select: {
-                style:    'os',
-                selector: 'td:first-child'
-              },
               order: [ 0, 'asc' ],
-              keys: {
-                  columns: ':not(:first-child)',
-                  keys: [ 9 ]
-              },
+              responsive: true,
               buttons: [
                 
               ]
           });
 
-
-          $('#testimonials_datatable-responsive').on( 'click', 'tbody td.editable', function (e) {
-              testimonials_editor.inline( this, {
-                  submitOnBlur: true
-              } );
-          } );
-
-          $('#testimonials_datatable-responsive').on( 'key-focus', function ( e, datatable, cell ) {
-              testimonials_editor.inline( cell.index() , {
-                  
-                  submitOnBlur: true
-              });
-          } );
-
-
-
-          testimonials_editor.on( 'preSubmit', function ( e, o, action ) {
-
-              if ( action !== 'remove' ) {
-
-                  var customer_name = testimonials_editor.field( 'customer_name' );
-                  var customer_message = testimonials_editor.field( 'customer_message' );
-                  var customer_image = testimonials_editor.field( 'customer_image' ); 
-                  // Only validate user input values - different values indicate that
-                  // the end user has not entered a value
-                  if ( ! customer_name.isMultiValue() ) {
-                      if ( ! customer_name.val() ) {
-                          customer_name.error( 'Value is required' );
-                      }
-                  }
-
-                  if ( ! customer_message.isMultiValue() ) {
-                      if ( ! customer_message.val() ) {
-                          customer_message.error( 'Value is required' );
-                      }
-                  }
-
-                  var ext = customer_image.val().split('.').pop();
-                  if ( ! customer_image.isMultiValue() ) {
-                      if ( ext !== 'jpg' && ext !== 'png' ) {
-                          customer_image.error( 'Please upload an image (jpg or png only).' );
-                      }
-                  }
-
-                  // ... additional validation rules
-       
-                  // If any error was reported, cancel the submission so it can be corrected
-                  if ( this.inError() ) {
-                      return false;
-                  }
-              }
-
-          } );
     }
 
     

@@ -121,7 +121,7 @@
     else
     {
 
-        $query = "SELECT * from testimonials";
+        $query = "SELECT * from student_grevence";
         $res = $conn -> query($query);
 
 

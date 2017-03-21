@@ -24,12 +24,12 @@
             $changedData = $data[$id][$column];
 
 
-            $sql = "UPDATE category SET $column='$changedData' WHERE category_id=$id";
+            $sql = "UPDATE teacher_profile SET $column='$changedData' WHERE teacher_id=$id";
 
 
             if ($conn->query($sql) === TRUE) {
 
-                $query = "SELECT * from category WHERE category_id=".$id;
+                $query = "SELECT * from teacher_profile WHERE teacher_id=".$id;
 
                 $res = $conn -> query($query);
 
@@ -56,40 +56,27 @@
 
             $data = $_POST['data'][0];
 
-            $category_name = $data['category_name'];
+            $teacher_id = $data['teacher_id'];
 
-            $category_description = $data['category_description'];
+            $coordinating_course = $data['coordinating_course'];
+
+            $coordinating_sem = $data['coordinating_sem'];
+
+            $coordinating_sec = $data['coordinating_sec'];
 
 
 
 
-            $sql = "INSERT into category (category_name,category_description) VALUES ('$category_name','$category_description')";
+            $sql = "UPDATE teacher_profile SET type = 'coordinator', coordinating_course = '$coordinating_course', coordinating_sem = '$coordinating_sem', coordinating_sec = '$coordinating_sec' WHERE teacher_id = $teacher_id";
 
-            if (empty($category_name) && empty($category_description)) {
-                # code...
-                echo '{"fieldErrors":[{"name":"category_name","status":"Value is required."}, 
-                  {"name":"category_description","status":"Value is required."} ],"data":[]}';
-            }
-            else if (empty($category_name))
-            {
-                echo '{"fieldErrors":[{"name":"category_name","status":"Value is required."} ],"data":[]}';
-            }
-            else if (empty($category_description)) {
-                
-                echo '{"fieldErrors":[{"name":"category_description","status":"Value is required."} ],"data":[]}';
-
-            }
-            else{
 
             if ($conn->query($sql) === TRUE) {
 
-                $query = "SELECT * from category WHERE category_name='$category_name'";
+                $query = "SELECT * from teacher_profile WHERE teacher_id = $teacher_id";
 
-                // var_dump($query);
 
                 $res = $conn -> query($query);
 
-                // var_dump($res);
                 $result = array();
 
 
@@ -100,11 +87,45 @@
                 }
 
                 print('{"data":'.json_encode($result).'}');
-            }        
+            }    
+            else
+            {
+                echo '{"fieldErrors":[{"name":"coordinating_course","status":"Please select different."},{"name":"coordinating_sec","status":"Please select different."},{"name":"coordinating_sem","status":"Please select different."}],"data":[]}';
+            }    
         }
+        else if ($_POST['action'] == "remove")
+        {
 
-            
-      }
+            $data = $_POST['data'];
+
+            $id = array_keys($data);
+    
+            $id = array_shift($id);
+
+            $delete_sql = "UPDATE teacher_profile SET type = 'normal', coordinating_course = NULL,  coordinating_sem = NULL,  coordinating_sec = NULL WHERE teacher_id = $id";
+
+            if ($conn->query($delete_sql) === TRUE) {
+
+                $query = "SELECT * from teacher_profile";
+
+                $res = $conn -> query($query);
+
+
+                $result = array();
+
+
+                while ($row = $res -> fetch_assoc()) {
+                    # code...
+                    $result[] = $row;
+
+                }
+
+                print('{"data":'.json_encode($result).'}');
+
+
+            }
+
+        }
         
 
     }else
@@ -117,26 +138,18 @@
 
 
             $result = array();
-            $options = array();
+
 
 
             while ($row = $res -> fetch_assoc()) {
                 # code...
                 $result[] = $row;
-                // $arr['label'] = $row['category_name'];
-                // $arr['value'] = $row['category_name'];
-                // array_push($options, $arr);
 
             }
-            
-            if (isset($_POST['getOptions'])) {
-                
-                print(json_encode($options));
-            }
-            else {
+
                 
                 print('{"data":'.json_encode($result).'}');
-            }
+
             
             
     }
