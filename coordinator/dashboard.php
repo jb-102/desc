@@ -1046,7 +1046,7 @@
               },
               responsive: 'true',
               buttons: [
-                { extend:"create", editor:attendence_editor }
+                
               ]
           });
 
@@ -1063,37 +1063,79 @@
               });
           } );
 
-          // student_editor.on( 'preSubmit', function ( e, o, action ) {
+          attendence_editor.on( 'preSubmit', function ( e, o, action ) {
 
-          //   if ( action !== 'remove' ) {
+             if ( action !== 'remove' ) {
 
-          //       var tile_main_text = student_editor.field( 'tile_main_text' );
-          //       var top_heading = student_editor.field( 'top_heading' );
+               var attendence_sub1 = attendence_editor.field( 'attendence_sub1' );
+               var attendence_sub2 = attendence_editor.field( 'attendence_sub2' );
+               var attendence_sub3 = attendence_editor.field( 'attendence_sub3' );
+               var attendence_sub4 = attendence_editor.field( 'attendence_sub4' );
+               var attendence_sub5 = attendence_editor.field( 'attendence_sub5' );
+               var attendence_sub6 = attendence_editor.field( 'attendence_sub6' );
+               var total_attendence = attendence_editor.field( 'total_attendence' );
                 
-          //       // Only validate user input values - different values indicate that
-          //       // the end user has not entered a value
-          //       if ( ! tile_main_text.isMultiValue() ) {
-          //           if ( ! tile_main_text.val() ) {
-          //               tile_main_text.error( 'Value is required' );
-          //           }
-          //       }
+                
+                // Only validate user input values - different values indicate that
+                // the end user has not entered a value
+        
 
-          //       if ( ! top_heading.isMultiValue() ) {
-          //           if ( ! top_heading.val() ) {
-          //               top_heading.error( 'Value is required' );
-          //           }
-          //       }
+               if ( ! attendence_sub1.isMultiValue() ) {
+                  if ( ! attendence_sub1.val() ) {
+                     attendence_sub1.error( 'Value is required' );
+                   }
+              }
+
+               if ( ! attendence_sub2.isMultiValue() ) {
+                  if ( ! attendence_sub2.val() ) {
+                     attendence_sub2.error( 'Value is required' );
+                   }
+              }
+
+               if ( ! attendence_sub3.isMultiValue() ) {
+                  if ( ! attendence_sub3.val() ) {
+                     attendence_sub3.error( 'Value is required' );
+                   }
+              }
+
+               if ( ! attendence_sub4.isMultiValue() ) {
+                  if ( ! attendence_sub4.val() ) {
+                     attendence_sub4.error( 'Value is required' );
+                   }
+              }
+
+               if ( ! attendence_sub5.isMultiValue() ) {
+                  if ( ! attendence_sub5.val() ) {
+                     attendence_sub5.error( 'Value is required' );
+                   }
+              }
+
+               if ( ! attendence_sub6.isMultiValue() ) {
+                  if ( ! attendence_sub6.val() ) {
+                     attendence_sub6.error( 'Value is required' );
+                   }
+              }
+
+               if ( ! total_attendence.isMultiValue() ) {
+                  if ( ! total_attendence.val() ) {
+                     total_attendence.error( 'Value is required' );
+                   }
+              }
+
+               
 
 
-          //       // ... additional validation rules
+                
+
+                 // ... additional validation rules
      
-          //       // If any error was reported, cancel the submission so it can be corrected
-          //       if ( this.inError() ) {
-          //           return false;
-          //       }
-          //   }
+                // If any error was reported, cancel the submission so it can be corrected
+                 if ( this.inError() ) {
+                     return false;
+                 }
+             }
 
-          // } );
+           } );
     }
 
 
@@ -1149,6 +1191,11 @@
                    {
                       label: "MARKS SUB6:",
                       name: "marks_sub6",
+                      type: "text"
+                  },
+                  {
+                      label: "TOTAL MARKS:",
+                      name: "total_marks",
                       type: "text"
                   },
                       ]
@@ -1233,37 +1280,89 @@
               });
           } );
 
-          // student_editor.on( 'preSubmit', function ( e, o, action ) {
+           sessional_editor.on( 'preSubmit', function ( e, o, action ) {
 
-          //   if ( action !== 'remove' ) {
+             if ( action !== 'remove' ) {
 
-          //       var tile_main_text = student_editor.field( 'tile_main_text' );
-          //       var top_heading = student_editor.field( 'top_heading' );
+               var name = sessional_editor.field( 'name' );
+               var semester = sessional_editor.field( 'semester' );
+               var marks_sub1 = sessional_editor.field( 'marks_sub1' );
+               var marks_sub2 = sessional_editor.field( 'marks_sub2' );
+               var marks_sub3 = sessional_editor.field( 'marks_sub3' );
+               var marks_sub4 = sessional_editor.field( 'marks_sub4' );
+               var marks_sub5 = sessional_editor.field( 'marks_sub5' );
+               var marks_sub6 = sessional_editor.field( 'marks_sub6' );
+               var total_marks = sessional_editor.field( 'total_marks' );
                 
-          //       // Only validate user input values - different values indicate that
-          //       // the end user has not entered a value
-          //       if ( ! tile_main_text.isMultiValue() ) {
-          //           if ( ! tile_main_text.val() ) {
-          //               tile_main_text.error( 'Value is required' );
-          //           }
-          //       }
+                
+                // Only validate user input values - different values indicate that
+                // the end user has not entered a value
+                 if ( ! name.isMultiValue() ) {
+                    if ( ! name.val() ) {
+                         name.error( 'Value is required' );
+                    }
+               }
 
-          //       if ( ! top_heading.isMultiValue() ) {
-          //           if ( ! top_heading.val() ) {
-          //               top_heading.error( 'Value is required' );
-          //           }
-          //       }
+              if ( ! semester.isMultiValue() ) {
+                  if ( ! semester.val() ) {
+                     semester.error( 'Value is required' );
+                   }
+              }
+
+               if ( ! marks_sub1.isMultiValue() ) {
+                  if ( ! marks_sub1.val() ) {
+                     marks_sub1.error( 'Value is required' );
+                   }
+              }
+
+               if ( ! marks_sub2.isMultiValue() ) {
+                  if ( ! marks_sub2.val() ) {
+                     marks_sub2.error( 'Value is required' );
+                   }
+              }
+
+               if ( ! marks_sub3.isMultiValue() ) {
+                  if ( ! marks_sub3.val() ) {
+                     marks_sub3.error( 'Value is required' );
+                   }
+              }
+
+               if ( ! marks_sub4.isMultiValue() ) {
+                  if ( ! marks_sub4.val() ) {
+                     marks_sub4.error( 'Value is required' );
+                   }
+              }
+
+               if ( ! marks_sub5.isMultiValue() ) {
+                  if ( ! marks_sub5.val() ) {
+                     marks_sub5.error( 'Value is required' );
+                   }
+              }
+
+               if ( ! marks_sub6.isMultiValue() ) {
+                  if ( ! marks_sub6.val() ) {
+                     marks_sub6.error( 'Value is required' );
+                   }
+              }
+
+               if ( ! total_marks.isMultiValue() ) {
+                  if ( ! total_marks.val() ) {
+                     total_marks.error( 'Value is required' );
+                   }
+              }
+
+               
 
 
-          //       // ... additional validation rules
+            // ... additional validation rules
      
-          //       // If any error was reported, cancel the submission so it can be corrected
-          //       if ( this.inError() ) {
-          //           return false;
-          //       }
-          //   }
+               // If any error was reported, cancel the submission so it can be corrected
+              if ( this.inError() ) {
+                    return false;
+              }
+          }
 
-          // } );
+        } );
     }
 
    
@@ -1357,37 +1456,52 @@
               });
           } );
 
-          // student_editor.on( 'preSubmit', function ( e, o, action ) {
+          classroutine_editor.on( 'preSubmit', function ( e, o, action ) {
 
-          //   if ( action !== 'remove' ) {
+            if ( action !== 'remove' ) {
 
-          //       var tile_main_text = student_editor.field( 'tile_main_text' );
-          //       var top_heading = student_editor.field( 'top_heading' );
+              var subject_name = classroutine_editor.field( 'subject_name' );
+              var semester = classroutine_editor.field( 'semester' );
+              var teacher = classroutine_editor.field( 'teacher' );
+              var total_classes = classroutine_editor.field( 'total_classes' );
                 
           //       // Only validate user input values - different values indicate that
           //       // the end user has not entered a value
-          //       if ( ! tile_main_text.isMultiValue() ) {
-          //           if ( ! tile_main_text.val() ) {
-          //               tile_main_text.error( 'Value is required' );
-          //           }
-          //       }
+                if ( ! subject_name.isMultiValue() ) {
+                     if ( ! subject_name.val() ) {
+                         subject_name.error( 'Value is required' );
+                     }
+                 }
 
-          //       if ( ! top_heading.isMultiValue() ) {
-          //           if ( ! top_heading.val() ) {
-          //               top_heading.error( 'Value is required' );
-          //           }
-          //       }
+                 if ( ! semester.isMultiValue() ) {
+                   if ( ! semester.val() ) {
+                       semester.error( 'Value is required' );
+                     }
+                 }
+
+                 if ( ! teacher.isMultiValue() ) {
+                   if ( ! teacher.val() ) {
+                       teacher.error( 'Value is required' );
+                     }
+                   }
+                     
+                 if ( ! total_classes.isMultiValue() ) {
+                   if ( ! total_classes.val() ) {
+                       total_classes.error( 'Value is required' );
+                     }
+                   }
+                   
 
 
           //       // ... additional validation rules
      
-          //       // If any error was reported, cancel the submission so it can be corrected
-          //       if ( this.inError() ) {
-          //           return false;
-          //       }
-          //   }
+              // If any error was reported, cancel the submission so it can be corrected
+                 if ( this.inError() ) {
+                    return false;
+                 }
+             }
 
-          // } );
+           } );
     }
       //projects editor and datatable
     {
@@ -1477,140 +1591,57 @@
               projects_editor.inline( cell.index() , {
                   submitOnBlur: true
               });
-          } );
-    }
 
-    {
-          testimonials_editor = new $.fn.dataTable.Editor( {
-              ajax: "./php/get_testimonials_data.php",
-              keys: true,
-              table: "#testimonials_datatable-responsive",
-              idSrc:  'testimonial_id',
-              fields: [ {
-                      label: "TILE ID:",
-                      name: "testimonial_id",
-                      type: "text"
-                  }, {
-                      label: "CUSTOMER NAME:",
-                      name: "customer_name",
-                      type: "text"
-                  }, {
-                      label: "CUSTOMER MESSAGE:",
-                      name: "customer_message",
-                      type: "text"
-                  }, {
-                      label: "CUSTOMER IMAGE:",
-                      name: "customer_image", 
-                      type: "upload"
-                  }, {
-                      label: "ON HOME:",
-                      name: "testimonial_on_home", 
-                      type: "select",
-                      options: [
-                        { label: "no", value: "no" },
-                        { label: "yes", value: "yes" }
-                      ]
+          projects_editor.on( 'preSubmit', function ( e, o, action ) {
 
-                  }
-              ]
-          } );
+            if ( action !== 'remove' ) {
 
-
-          $('#testimonials_datatable-responsive').DataTable({
-              dom: "Bfrtip",
-              ajax: "./php/get_testimonials_data.php",
-              columns: [
-                  { 
-                    data: "testimonial_id", 
-                    
-                  },
-                  { 
-                    data: "customer_name",
-                    className: 'editable'
-                  },
-                  { 
-                    data: "customer_message", 
-                    className: 'editable'
-                  },  
-                  { 
-                    data: "customer_image",
-                    className: 'editable'
-                  },
-                  { 
-                    data: "testimonial_on_home",
-                    className: 'editable'
-                  }
-              ],
-              select: {
-                style:    'os',
-                selector: 'td:first-child'
-              },
-              order: [ 0, 'asc' ],
-              keys: {
-                  columns: ':not(:first-child)',
-                  keys: [ 9 ]
-              },
-              buttons: [
+              var project_name = projects_editor.field( 'project_name' );
+              var no_of_members = projects_editor.field( 'no_of_members' );
+              var project_members = projects_editor.field( 'project_members' );
+              var year = projects_editor.field( 'year' );
                 
-              ]
-          });
+          //       // Only validate user input values - different values indicate that
+          //       // the end user has not entered a value
+                if ( ! project_name.isMultiValue() ) {
+                     if ( ! project_name.val() ) {
+                         project_name.error( 'Value is required' );
+                     }
+                 }
+
+                if ( ! no_of_members.isMultiValue() ) {
+                   if ( ! no_of_members.val() ) {
+                       no_of_members.error( 'Value is required' );
+                     }
+                 }
+
+                if ( ! project_members.isMultiValue() ) {
+                   if ( ! project_members.val() ) {
+                       project_members.error( 'Value is required' );
+                     }
+                   }
+                     
+                if ( ! year.isMultiValue() ) {
+                   if ( ! year.val() ) {
+                       year.error( 'Value is required' );
+                     }
+                   }
+                   
 
 
-          $('#testimonials_datatable-responsive').on( 'click', 'tbody td.editable', function (e) {
-              testimonials_editor.inline( this, {
-                  submitOnBlur: true
-              } );
-          } );
+          //       // ... additional validation rules
+     
+              // If any error was reported, cancel the submission so it can be corrected
+                 if ( this.inError() ) {
+                    return false;
+                 }
+             }
 
-          $('#testimonials_datatable-responsive').on( 'key-focus', function ( e, datatable, cell ) {
-              testimonials_editor.inline( cell.index() , {
-                  
-                  submitOnBlur: true
-              });
-          } );
-
-
-            
-          testimonials_editor.on( 'preSubmit', function ( e, o, action ) {
-
-              if ( action !== 'remove' ) {
-
-                  var customer_name = testimonials_editor.field( 'customer_name' );
-                  var customer_message = testimonials_editor.field( 'customer_message' );
-                  var customer_image = testimonials_editor.field( 'customer_image' ); 
-                  // Only validate user input values - different values indicate that
-                  // the end user has not entered a value
-                  if ( ! customer_name.isMultiValue() ) {
-                      if ( ! customer_name.val() ) {
-                          customer_name.error( 'Value is required' );
-                      }
-                  }
-
-                  if ( ! customer_message.isMultiValue() ) {
-                      if ( ! customer_message.val() ) {
-                          customer_message.error( 'Value is required' );
-                      }
-                  }
-
-                  var ext = customer_image.val().split('.').pop();
-                  if ( ! customer_image.isMultiValue() ) {
-                      if ( ext !== 'jpg' && ext !== 'png' ) {
-                          customer_image.error( 'Please upload an image (jpg or png only).' );
-                      }
-                  }
-
-                  // ... additional validation rules
-       
-                  // If any error was reported, cancel the submission so it can be corrected
-                  if ( this.inError() ) {
-                      return false;
-                  }
-              }
-
+           } );
           } );
     }
 
-    
+      
   });
   
 </script>
