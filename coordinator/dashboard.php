@@ -79,7 +79,7 @@
                 <ul class="nav side-menu">
                   <li id="home_nav"><a class="link active"><i class="fa fa-home"></i> Home </a></li>
 
-                  <li id="timetable_nav"><a class="link"><i class="fa fa-edit"></i> Time Table </a></li>
+                  <li id="attendence_nav"><a class="link"><i class="fa fa-edit"></i> Attendence </a></li>
 
                   <li id="sessionals_nav"><a class="link"><i class="fa fa-desktop"></i> Sessionals </a></li>
 
@@ -170,7 +170,7 @@
                   
                   <div class="count">389</div>
                   
-                  <h2 style="margin-left: 10px;">MY CO-ORDINATOR</h2>
+                  <h4 style="margin-left: 10px;">MY CO-ORDINATOR</h4>
                   
                   <p>No. Of Co-ordinators</p>
                 </div>
@@ -198,25 +198,29 @@
           <div id="content_main">
             
             <!-- content to add/edit slider -->
-            <div hidden class="row" id="coordinator_div">
+            <div hidden class="row" id="attendence_div">
 
               <div class="col-md-12 col-sm-12 col-xs-12">
 
                 <div class="x_panel">
 
                   <div class="x_title">
-                    <h2>EDIT CATEGORY DETAILS</h2>
+                    <h2>ATTENDENCE</h2>
                     <div class="clearfix"></div>
                   </div>
 
                   <div class="x_content" style="display: block;">
-                    <table id="coordinator_datatable-responsive" class="table table-striped table-bordered dt-responsive wrap" cellspacing="0" width="100%">
+                    <table id="attendence_datatable-responsive" class="table table-striped table-bordered dt-responsive wrap" cellspacing="0" width="100%">
                       <thead>
                         <tr>
-                          <th>TEACHER ID</th>
-                          <th>CATEGORY NAME</th>
-                          <th>CATEGORY DESCRIPTION</th>
-                          <th>STOCK</th>
+                          <th>ENROLL</th>
+                          <th>ATTENDANCE SUB1</th>
+                          <th>ATTENDANCE SUB2</th>
+                          <th>ATTENDANCE SUB3</th>
+                          <th>ATTENDANCE SUB4</th>
+                          <th>ATTENDANCE SUB5</th>
+                          <th>ATTENDANCE SUB6</th>
+                          <th>TOTAL ATTENDANCE</th>
                         </tr>
                       </thead>
                     </table>  
@@ -226,29 +230,31 @@
             </div>    
 
             <!-- content to edit/delete card -->
-            <div hidden class="row" id="edit_card_div">
+            <div hidden class="row" id="sessional_div">
 
               <div class="col-md-12 col-sm-12 col-xs-12">
 
                 <div class="x_panel">
 
                   <div class="x_title">
-                    <h2>EDIT CARD DETAILS</h2>
+                    <h2>Sessional Awards</h2>
                     <div class="clearfix"></div>
                   </div>
 
                   <div class="x_content" style="display: block;">
-                    <table id="faculty_datatable-responsive" class="table table-striped table-bordered dt-responsive wrap" cellspacing="0" width="100%">
+                    <table id="sessional_datatable-responsive" class="table table-striped table-bordered dt-responsive wrap" cellspacing="0" width="100%">
                       <thead>
                         <tr>
-                          <th></th>
-                          <th>CARD NAME</th>
-                          <th>CARD DESCRIPTION</th>
-                          <th>CARD PRICE</th>
-                          <th>CARD CATEGORY</th>
-                          <th>CARD IMAGE</th>
-                          <th>CARD ON HOME</th>
-                          <th>LATEST</th>
+                          <th>ENROLL</th>
+                          <th>NAME</th>
+                          <th>SEMESTER</th>
+                          <th>MARKS SUB1</th>
+                          <th>MARKS SUB2</th>
+                          <th>MARKS SUB3</th>
+                          <th>MARKS SUB4</th>
+                          <th>MARKS SUB5</th>
+                          <th>MARKS SUB6</th>
+                          <th>TOTAL MARKS</th>
                         </tr>
                       </thead>
                     </table>  
@@ -436,12 +442,15 @@
     $("#content_main").slideUp();
   });
 
-  $("#timetable_nav").click(function(){
+  $("#attendence_nav").click(function(){
 
     $(".link").removeClass('active');
-    $("#timetable_nav .link").addClass('active');
+    $("#attendence_nav .link").addClass('active');
     $("#content_main").slideDown();
-  	//$("#category_div").slideUp();
+  	$("#attendence_div").slideDown();
+    $("#sessional_div").slideUp();
+    $("#projects_div").slideUp();
+     $("#classroutine_div").slideUp();
     //$("#edit_card_div").slideUp();
     //$("#testimonials_div").slideUp();
 
@@ -451,8 +460,11 @@
 
     $(".link").removeClass('active');
     $("#sessionals_nav .link").addClass('active');
-    $("#content_main").slideUp();
-   // $("#category_div").slideUp();
+    $("#content_main").slideDown();
+    $("#sessional_div").slideDown();
+    $("#projects_div").slideUp();
+     $("#classroutine_div").slideUp();
+     $("#attendence_div").slideUp();
     //$("#edit_card_div").slideUp();
     //$("#testimonials_div").slideUp();
 
@@ -465,6 +477,8 @@
     $("#content_main").slideDown();
     $("#projects_div").slideDown();
      $("#classroutine_div").slideUp();
+     $("#sessional_div").slideUp();
+     $("#attendence_div").slideUp();
 
   });  
 
@@ -476,6 +490,8 @@
    // $("#category_div").slideUp();
     $("#classroutine_div").slideDown();
     $("#projects_div").slideUp();
+    $("#sessional_div").slideUp();
+    $("#attendence_div").slideUp();
     //$("#testimonials_div").slideUp();
 
   });  
@@ -733,23 +749,23 @@
       } );
     }
 
-    {
-      card_editor = new $.fn.dataTable.Editor( {
-        ajax: "./php/get_card_data.php",
+   /* {
+      sessional_editor = new $.fn.dataTable.Editor( {
+        ajax: "./php/get_sessional_data.php",
         keys: true,
-        table: "#card_datatable-responsive",
-        idSrc:  'card_id',
+        table: "#sessional_awards_datatable-responsive",
+        idSrc:  'enroll',
         fields: [ {
-                label: "CARD NAME:",
-                name: "card_name",
+                label: "ENROLL:",
+                name: "enroll",
                 type: "text"
             }, {
-                label: "CARD DESCRIPTION:",
-                name: "card_description",
-                type: "textarea"
+                label: "NAME:",
+                name: "name",
+                type: "text"
             }, {
-                label: "CARD PRICE:",
-                name: "card_price",
+                label: "SESSIONAL:",
+                name: "sessional",
                 type: "text"
             }, {
                 label: "CARD CATEGORY:",
@@ -920,8 +936,338 @@
           }
 
       } );
+
+    }
+*/
+
+//timetable editor and data table
+       {
+          attendence_editor = new $.fn.dataTable.Editor( {
+              ajax: "./php/get_attendence_data.php",
+              keys: true,
+              table: "#attendence_datatable-responsive",
+              idSrc:  'enroll',
+              fields: [ 
+                  {
+                      label: "ENROLL:",
+                      name: "enroll",
+                      type: "text"
+                  }, 
+                  {
+                      label: "ATTENDENCE SUB1:",
+                      name: "attendence_sub1",
+                      type: "text"
+                  }, 
+                  {
+                      label: "ATTENDENCE SUB2:",
+                      name: "attendence_sub2",
+                      type: "text"
+                  }, 
+                  {
+                      label: "ATTENDENCE SUB3:",
+                      name: "attendence_sub3",
+                      type: "text"
+                  }, 
+                  {
+                      label: "ATTENDENCE SUB4:",
+                      name: "attendence_sub4",
+                      type: "text"
+                  },
+                   {
+                      label: "ATTENDENCE SUB5:",
+                      name: "attendence_sub5",
+                      type: "text"
+                  },
+                   {
+                      label: "ATTENDENCE SUB6:",
+                      name: "attendence_sub6",
+                      type: "text"
+                  },
+                   {
+                      label: "TOTAL ATTENDENCE:",
+                      name: "total_attendence",
+                      type: "text"
+                  },
+                   
+                      ]
+          } );
+
+
+          $('#attendence_datatable-responsive').DataTable({
+              dom: "Bfrtip",
+              ajax: "./php/get_attendence_data.php",
+              columns: [
+                  { 
+                    data: "enroll", 
+                    
+                  },
+                  
+                  { 
+                    data: "attendence_sub1",
+                    className: 'editable'
+                  },
+
+                  { 
+                    data: "attendence_sub2",
+                    className: 'editable'
+                  },
+                  { 
+                    data: "attendence_sub3",
+                    className: 'editable'
+                  },
+                  { 
+                    data: "attendence_sub4",
+                    className: 'editable'
+                  },
+                  { 
+                    data: "attendence_sub5",
+                    className: 'editable'
+                  },
+                  { 
+                    data: "attendence_sub6",
+                    className: 'editable'
+                  },
+                  { 
+                    data: "total_attendence",
+                    className: 'editable'
+                  },
+
+
+
+
+
+
+                 
+              ],
+              order: [ 0, 'asc' ],
+              keys: {
+                  columns: ':not(:first-child)',
+                  keys: [ 9 ]
+              },
+              responsive: 'true',
+              buttons: [
+                { extend:"create", editor:attendence_editor }
+              ]
+          });
+
+
+          $('#attendence_datatable-responsive').on( 'click', 'tbody td.editable', function (e) {
+              attendence_editor.inline( this, {
+                   submitOnBlur: true
+              } );
+          } );
+
+          $('#attendence_datatable-responsive').on( 'key-focus', function ( e, datatable, cell ) {
+              attendence_editor.inline( cell.index() , {
+                  submitOnBlur: true
+              });
+          } );
+
+          // student_editor.on( 'preSubmit', function ( e, o, action ) {
+
+          //   if ( action !== 'remove' ) {
+
+          //       var tile_main_text = student_editor.field( 'tile_main_text' );
+          //       var top_heading = student_editor.field( 'top_heading' );
+                
+          //       // Only validate user input values - different values indicate that
+          //       // the end user has not entered a value
+          //       if ( ! tile_main_text.isMultiValue() ) {
+          //           if ( ! tile_main_text.val() ) {
+          //               tile_main_text.error( 'Value is required' );
+          //           }
+          //       }
+
+          //       if ( ! top_heading.isMultiValue() ) {
+          //           if ( ! top_heading.val() ) {
+          //               top_heading.error( 'Value is required' );
+          //           }
+          //       }
+
+
+          //       // ... additional validation rules
+     
+          //       // If any error was reported, cancel the submission so it can be corrected
+          //       if ( this.inError() ) {
+          //           return false;
+          //       }
+          //   }
+
+          // } );
     }
 
+
+
+//sessional editor and data table
+       {
+          sessional_editor = new $.fn.dataTable.Editor( {
+              ajax: "./php/get_sessional_data.php",
+              keys: true,
+              table: "#sessional_datatable-responsive",
+              idSrc:  'enroll',
+              fields: [ 
+                  {
+                      label: "ENROLL:",
+                      name: "enroll",
+                      type: "text"
+                  }, 
+                  {
+                      label: "NAME:",
+                      name: "name",
+                      type: "text"
+                  }, 
+                  {
+                      label: "SEMESTER:",
+                      name: "semester",
+                      type: "text"
+                  }, 
+                  {
+                      label: "MARKS SUB1:",
+                      name: "marks_sub1",
+                      type: "text"
+                  }, 
+                  {
+                      label: "MARKS SUB2:",
+                      name: "marks_sub2",
+                      type: "text"
+                  },
+                   {
+                      label: "MARKS SUB3:",
+                      name: "marks_sub3",
+                      type: "text"
+                  },
+                   {
+                      label: "MARKS SUB4:",
+                      name: "marks_sub4",
+                      type: "text"
+                  },
+                   {
+                      label: "MARKS SUB5:",
+                      name: "marks_sub5",
+                      type: "text"
+                  },
+                   {
+                      label: "MARKS SUB6:",
+                      name: "marks_sub6",
+                      type: "text"
+                  },
+                      ]
+          } );
+
+
+          $('#sessional_datatable-responsive').DataTable({
+              dom: "Bfrtip",
+              ajax: "./php/get_sessional_data.php",
+              columns: [
+                  { 
+                    data: "enroll", 
+                    
+                  },
+                  { 
+                    data: "name",
+                    className: 'editable'
+                  },
+                  { 
+                    data: "semester", 
+                    className: 'editable'
+                  },
+                  
+                  { 
+                    data: "marks_sub1",
+                    className: 'editable'
+                  },
+
+                  { 
+                    data: "marks_sub2",
+                    className: 'editable'
+                  },
+                  { 
+                    data: "marks_sub3",
+                    className: 'editable'
+                  },
+                  { 
+                    data: "marks_sub4",
+                    className: 'editable'
+                  },
+                  { 
+                    data: "marks_sub5",
+                    className: 'editable'
+                  },
+                  { 
+                    data: "marks_sub6",
+                    className: 'editable'
+                  },
+                  { 
+                    data: "total_marks",
+                    className: 'editable'
+                  },
+
+
+
+
+
+
+                 
+              ],
+              order: [ 0, 'asc' ],
+              keys: {
+                  columns: ':not(:first-child)',
+                  keys: [ 9 ]
+              },
+              responsive: 'true',
+              buttons: [
+                { extend:"create", editor:sessional_editor }
+              ]
+          });
+
+
+          $('#sessional_datatable-responsive').on( 'click', 'tbody td.editable', function (e) {
+              sessional_editor.inline( this, {
+                   submitOnBlur: true
+              } );
+          } );
+
+          $('#sessional_datatable-responsive').on( 'key-focus', function ( e, datatable, cell ) {
+              sessional_editor.inline( cell.index() , {
+                  submitOnBlur: true
+              });
+          } );
+
+          // student_editor.on( 'preSubmit', function ( e, o, action ) {
+
+          //   if ( action !== 'remove' ) {
+
+          //       var tile_main_text = student_editor.field( 'tile_main_text' );
+          //       var top_heading = student_editor.field( 'top_heading' );
+                
+          //       // Only validate user input values - different values indicate that
+          //       // the end user has not entered a value
+          //       if ( ! tile_main_text.isMultiValue() ) {
+          //           if ( ! tile_main_text.val() ) {
+          //               tile_main_text.error( 'Value is required' );
+          //           }
+          //       }
+
+          //       if ( ! top_heading.isMultiValue() ) {
+          //           if ( ! top_heading.val() ) {
+          //               top_heading.error( 'Value is required' );
+          //           }
+          //       }
+
+
+          //       // ... additional validation rules
+     
+          //       // If any error was reported, cancel the submission so it can be corrected
+          //       if ( this.inError() ) {
+          //           return false;
+          //       }
+          //   }
+
+          // } );
+    }
+
+   
+//class routine editor and table
     {
           classroutine_editor = new $.fn.dataTable.Editor( {
               ajax: "./php/get_classroutine_data.php",
@@ -994,7 +1340,7 @@
               },
               responsive: 'true',
               buttons: [
-                
+                { extend:"create", editor:classroutine_editor }
               ]
           });
 
@@ -1043,7 +1389,7 @@
 
           // } );
     }
-
+      //projects editor and datatable
     {
           projects_editor = new $.fn.dataTable.Editor( {
               ajax: "./php/get_projects_data.php",
@@ -1116,7 +1462,7 @@
               },
               responsive: 'true',
               buttons: [
-                
+                { extend:"create", editor:projects_editor }
               ]
           });
 
