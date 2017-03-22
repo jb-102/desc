@@ -57,17 +57,7 @@
             $changedData = $data[$id][$column];
 
 
-            //if ($column == 'subject_name') {
-
-
-                //if ($changedData == 'yes') {
-
-
-            
-                   // $replace_sql = "UPDATE tiles SET tile_on_left = 'no' WHERE tile_on_left = 'yes' ";
-
-                    //if ($conn->query($replace_sql) === TRUE) {
-
+          
                         $sql = "UPDATE attendence_profile SET ". $column."='".$changedData."' WHERE enroll=".$id;
 
                         if ($conn->query($sql) === TRUE) {

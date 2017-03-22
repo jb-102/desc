@@ -497,8 +497,9 @@
      $("#attendence_div").slideUp();
     $("#sessional_div").slideDown();
     $("#projects_div").slideUp();
-     $("#classroutine_div").slideUp();
      $("#seminar_div").slideUp();
+    $("#classroutine_div").slideUp();
+    
     //$("#edit_card_div").slideUp();
     //$("#testimonials_div").slideUp();
 
@@ -509,37 +510,41 @@
     $(".link").removeClass('active');
     $("#projects_nav .link").addClass('active');
     $("#content_main").slideDown();
+    $("#attendence_div").slideUp();
      $("#sessional_div").slideUp();
     $("#projects_div").slideDown();
+    $("#seminar_div").slideUp();
     $("#classroutine_div").slideUp();
-     $("#attendence_div").slideUp();
-     $("#seminar_div").slideUp();
+     
+     
 
   });  
-
-  $("#classroutine_nav").click(function(){
-
-    $(".link").removeClass('active');
-    $("#classroutine_nav .link").addClass('active');
-    $("#content_main").slideDown();
-    $("#projects_div").slideUp();
-    $("#classroutine_div").slideDown();
-    $("#sessional_div").slideUp();
-    $("#attendence_div").slideUp();
-    $("#seminar_div").slideUp();
-    
-
-  }); 
 
    $("#seminar_nav").click(function(){
 
     $(".link").removeClass('active');
     $("#seminar_nav .link").addClass('active');
-    $("#content_main").slideDown()
-    $("#classroutine_div").slideUp();;
-    $("#seminar_div").slideDown();
-    $("#projects_div").slideUp();
+    $("#content_main").slideDown();
     $("#attendence_div").slideUp();
+    $("#sessional_div").slideUp();
+    $("#projects_div").slideUp();
+    $("#seminar_div").slideDown();
+    $("#classroutine_div").slideUp();
+    
+    
+
+  }); 
+
+    $("#classroutine_nav").click(function(){
+
+    $(".link").removeClass('active');
+    $("#classroutine_nav .link").addClass('active');
+    $("#content_main").slideDown();
+    $("#attendence_div").slideUp();
+    $("#sessional_div").slideUp();
+     $("#projects_div").slideUp();
+    $("#seminar_div").slideUp();
+     $("#classroutine_div").slideDown();
     
 
   }); 
@@ -556,152 +561,6 @@
 
 <!-- Datatables -->
 <script>
-
-  var slider_editor,category_editor,card_editor,student_editor,testimonials_editor;
-
-  $(document).ready(function() {
-
-    {
-          slider_editor = new $.fn.dataTable.Editor( {
-              ajax: "./php/get_slider_data.php",
-              keys: true,
-              table: "#slider_datatable-responsive",
-              idSrc:  'slider_id',
-              fields: [ 
-                  {
-                      label: "SLIDER ID:",
-                      name: "slider_id",
-                  }, 
-                  {
-                      label: "MAIN TEXT:",
-                      name: "main_text",
-                  }, 
-                  {
-                      label: "TOP HEADING:",
-                      name: "sub_heading_top",
-                  }, 
-                  {
-                      label: "BOTTOM HEADING:",
-                      name: "sub_heading_bottom",
-                  }, 
-                  {
-                      label: "IMAGE:",
-                      name: "background_img", 
-                      type: "upload"
-                  }, 
-                  {
-                      label: "STATUS:",
-                      name: "status",
-                      type:  "select",
-                      options: [
-                          { label: "published", value: "published" },
-                          { label: "unpublished", value: "unpublished" } 
-                        ]
-                  }
-            ]
-          } );
-
-          $('#slider_datatable-responsive').DataTable({
-              dom: "Bfrtip",
-              ajax: "./php/get_slider_data.php",
-              columns: [
-                  { 
-                    data: "slider_id", 
-                    
-                  },
-                  { 
-                    data: "main_text",
-                    className: 'editable'
-                  },
-                  { 
-                    data: "sub_heading_top", 
-                    className: 'editable'
-                  },
-                  { 
-                    data: "sub_heading_bottom",
-                    className: 'editable'
-                  },
-                  { 
-                    data: "background_img",
-                    className: 'editable'
-                  },
-                  { 
-                    data: "status", 
-                    className: 'editable'
-                  }
-              ],
-              order: [ 0, 'asc' ],
-              keys: {
-                  columns: ':not(:first-child)',
-                  keys: [ 9 ]
-              },
-                buttons: [
-                  
-                ]
-          });
-
-
-          $('#slider_datatable-responsive').on( 'click', 'tbody td.editable', function (e) {
-              slider_editor.inline( this, {
-                  submitOnBlur: true
-              } );
-          } );
-
-          $('#slider_datatable-responsive').on( 'key-focus', function ( e, datatable, cell ) {
-              slider_editor.inline( cell.index() , {
-                  
-                  submitOnBlur: true
-              });
-          } );
-
-
-
-          slider_editor.on( 'preSubmit', function ( e, o, action ) {
-
-              if ( action !== 'remove' ) {
-
-                  var main_text = slider_editor.field( 'main_text' );
-                  var sub_heading_top = slider_editor.field( 'sub_heading_top' );
-                  var sub_heading_bottom = slider_editor.field( 'sub_heading_bottom' );
-                  var background_img = slider_editor.field( 'background_img' ); 
-                  // Only validate user input values - different values indicate that
-                  // the end user has not entered a value
-                  if ( ! main_text.isMultiValue() ) {
-                      if ( ! main_text.val() ) {
-                          main_text.error( 'Value is required' );
-                      }
-                  }
-
-                  if ( ! sub_heading_top.isMultiValue() ) {
-                      if ( ! sub_heading_top.val() ) {
-                          sub_heading_top.error( 'Value is required' );
-                      }
-                  }
-
-                  if ( ! sub_heading_bottom.isMultiValue() ) {
-                      if ( ! sub_heading_bottom.val() ) {
-                          sub_heading_bottom.error( 'Value is required' );
-                      }
-                  }
-
-                  var ext = background_img.val().split('.').pop();
-                  if ( ! background_img.isMultiValue() ) {
-                      if ( ext !== 'jpg' && ext !== 'png' ) {
-                          background_img.error( 'Please upload an image (jpg or png only).' );
-                      }
-                  }
-
-
-                  // ... additional validation rules
-       
-                  // If any error was reported, cancel the submission so it can be corrected
-                  if ( this.inError() ) {
-                      return false;
-                  }
-              }
-
-          } );
-    }
 
    
 //timetable editor and data table
@@ -1018,14 +877,7 @@
                     data: "total_marks",
                     
                   },
-
-
-
-
-
-
-                 
-              ],
+           ],
               order: [ 0, 'asc' ],
               keys: {
                   columns: ':not(:first-child)',
@@ -1033,7 +885,8 @@
               },
               responsive: 'true',
               buttons: [
-                { extend:"create", editor:sessional_editor }
+                { extend:"create", editor:sessional_editor },
+                { extend:"remove", editor:sessional_editor }
               ]
           });
 
@@ -1223,7 +1076,8 @@
               },
               responsive: 'true',
               buttons: [
-                { extend:"create", editor:classroutine_editor }
+                { extend:"create", editor:classroutine_editor },
+                { extend:"remove", editor:classroutine_editor }
               ]
           });
 
@@ -1318,7 +1172,7 @@
                   }, 
                   {
                       label: "YEAR:",
-                      name: "semester",
+                      name: "year",
                       type: "text"
                   }, 
                  
@@ -1352,7 +1206,8 @@
               },
               responsive: 'true',
               buttons: [
-                { extend:"create", editor:seminar_editor }
+                { extend:"create", editor:seminar_editor },
+                { extend:"remove", editor:seminar_editor }
               ]
           });
 
@@ -1376,8 +1231,9 @@
               var topic_name = seminar_editor.field( 'topic_name' );
               var year = seminar_editor.field( 'year' );
                 
-          //       // Only validate user input values - different values indicate that
-          //       // the end user has not entered a value
+                 // Only validate user input values - different values indicate that
+                 // the end user has not entered a value
+
                 if ( ! topic_name.isMultiValue() ) {
                      if ( ! topic_name.val() ) {
                          topic_name.error( 'Value is required' );
@@ -1392,7 +1248,7 @@
 
                  
 
-          //       // ... additional validation rules
+               // ... additional validation rules
      
               // If any error was reported, cancel the submission so it can be corrected
                  if ( this.inError() ) {
@@ -1404,7 +1260,7 @@
     }
 
       //projects editor and datatable
-    {
+  {
           projects_editor = new $.fn.dataTable.Editor( {
               ajax: "./php/get_projects_data.php",
               keys: true,
@@ -1476,7 +1332,8 @@
               },
               responsive: 'true',
               buttons: [
-                { extend:"create", editor:projects_editor }
+                { extend:"create", editor:projects_editor },
+                { extend:"remove", editor:projects_editor }
               ]
           });
 
@@ -1491,10 +1348,12 @@
               projects_editor.inline( cell.index() , {
                   submitOnBlur: true
               });
+           });
 
           projects_editor.on( 'preSubmit', function ( e, o, action ) {
 
-            if ( action !== 'remove' ) {
+            if ( action !== 'remove' ) 
+            {
 
               var project_name = projects_editor.field( 'project_name' );
               var no_of_members = projects_editor.field( 'no_of_members' );
@@ -1529,20 +1388,19 @@
                    
 
 
-          //       // ... additional validation rules
+               // ... additional validation rules
      
               // If any error was reported, cancel the submission so it can be corrected
+                 
                  if ( this.inError() ) {
                     return false;
                  }
-             }
+            }
 
-           } );
-          } );
-    }
-
-      
-  });
+          
+          
+    });
+  }
   
 </script>
 <!-- /Datatables -->

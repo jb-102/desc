@@ -6,42 +6,7 @@
     {
 
 
-        if ($_POST['action'] == "upload") {
-            # code...
-
-            $target_dir = "../images/";
-        
-
-            $column = $_POST['uploadField'];
-                    
-            // saving and retrieving image path from database
-            $target_path = basename($_FILES['upload']['name']); 
-            $target_file = $target_dir . basename($_FILES['upload']['name']);
-
-            $imageFileType = pathinfo($target_path,PATHINFO_EXTENSION);
-            $check = getimagesize($_FILES["upload"]["tmp_name"]);
-
-            if (file_exists($target_file)) {
-                echo '{"data":[],"files":{"files":{"'.$target_path.'":{"id":"'.$target_path.'","filename":"'.$target_path.'","filesize":"'.$_FILES['upload']['size'].'","web_path":"images\/'.$target_path.'","system_path":"'.$target_file.'"}}},"upload":{"id":"'.$target_path.'"}}';
-            }
-            else if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" ) {
-                
-                echo '{"fieldErrors":[{"name":"'.$column.'","status":"Please upload an image (jpg or png only)."}],"data":[]}';
-            }
-            else if ($check[0] != 500 || $check[0] != 500 ) {
-                
-                echo '{"fieldErrors":[{"name":"'.$column.'","status":"Please upload an image of dimentions 500*500."}],"data":[]}';
-            }
-            else if (move_uploaded_file($_FILES["upload"]["tmp_name"], $target_file)) 
-            {
-                echo '{"data":[],"files":{"files":{"'.$target_path.'":{"id":"'.$target_path.'","filename":"'.$target_path.'","filesize":"'.$_FILES['upload']['size'].'","web_path":"images\/'.$target_path.'","system_path":"'.$target_file.'"}}},"upload":{"id":"'.$target_path.'"}}';
-            }
-            else
-            {
-            echo '{"fieldErrors":[{"name":"image","status":"Sorry, there was an error uploading your file."}],"data":[]}';
-            }
-        }
-        else if ($_POST['action'] == "edit") {
+        if ($_POST['action'] == "edit") {
             # code...
 
             $data = $_POST['data'];
@@ -56,17 +21,6 @@
 
             $changedData = $data[$id][$column];
 
-
-            //if ($column == 'subject_name') {
-
-
-                //if ($changedData == 'yes') {
-
-
-            
-                   // $replace_sql = "UPDATE tiles SET tile_on_left = 'no' WHERE tile_on_left = 'yes' ";
-
-                    //if ($conn->query($replace_sql) === TRUE) {
 
                         $sql = "UPDATE seminar_profile SET ". $column."='".$changedData."' WHERE enroll=".$id;
 
@@ -92,43 +46,79 @@
                         }
 
                     
-                //}
-                //else{
+               
+        }else if($_POST['action'] == "create")
+        {
 
-                  //   echo '{"fieldErrors":[{"name":"tile_on_left","status":"Please select correct option"}],"data":[]}';
+            $data = $_POST['data'][0];
 
-                //}
+            $enroll = $data['enroll'];
 
-            /*}else{
+            $topic_name = $data['topic_name'];
 
-                $sql = "UPDATE tiles SET ".$column."='".mysqli_real_escape_string($conn,$changedData)."' WHERE tile_id=".$id;
+            $year = $data['year'];
 
+           
 
-                if ($conn->query($sql) === TRUE) {
-
-                    $query = "SELECT * from tiles WHERE tile_id=".$id;
-
-                    $res = $conn -> query($query);
+            $sql = "INSERT INTO seminar_profile ( enroll, topic_name, year) VALUES ('$enroll', '$topic_name', '$year' )";
 
 
-                    $result = array();
+            if ($conn->query($sql) === TRUE) 
+            {
+                $query = "SELECT * from seminar_profile WHERE enroll = '$enroll' ";
 
 
-                    while ($row = $res -> fetch_assoc()) {
-                        # code...
-                        $result[] = $row;
+                $res = $conn -> query($query);
+
+                $result = array();
+
+
+                while ($row = $res -> fetch_assoc()) 
+                    {
+                    # code...
+                    $result[] = $row;
 
                     }
 
-                    print('{"data":'.json_encode($result).'}');
+                print('{"data":'.json_encode($result).'}');
+            }    
+           
+        }  
+        else if ($_POST['action'] == "remove")
+        {
+
+            $data = $_POST['data'];
+
+            $id = array_keys($data);
+    
+            $id = array_shift($id);
+
+            $delete_sql = "DELETE FROM seminar_profile WHERE enroll = '$id'";
+
+            if ($conn->query($delete_sql) === TRUE)
+             {
+
+                $query = "SELECT * from seminar_profile";
+
+                $res = $conn -> query($query);
 
 
-                } else {
-                    echo '{"fieldErrors":[{"name":"'.$column.'","status":"failed to updated."}],"data":[]}';
+                $result = array();
+
+
+                while ($row = $res -> fetch_assoc()) 
+                {
+                    # code...
+                    $result[] = $row;
+
                 }
 
-            }*/
+                print('{"data":'.json_encode($result).'}');
+
+
+            }
         }
+        
 
     }
     else

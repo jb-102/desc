@@ -6,7 +6,8 @@
     {
 
 
-        if ($_POST['action'] == "upload") {
+        if ($_POST['action'] == "upload") 
+        {
             # code...
 
             $target_dir = "../images/";
@@ -41,7 +42,8 @@
             echo '{"fieldErrors":[{"name":"image","status":"Sorry, there was an error uploading your file."}],"data":[]}';
             }
         }
-        else if ($_POST['action'] == "edit") {
+        else if ($_POST['action'] == "edit") 
+        {
             # code...
 
             $data = $_POST['data'];
@@ -57,78 +59,38 @@
             $changedData = $data[$id][$column];
 
 
-            //if ($column == 'subject_name') {
+           
+                    $sql = "UPDATE sessional_awards SET ". $column."='".$changedData."' WHERE enroll=" . $id;
+
+                    if ($conn->query($sql) === TRUE) 
+                        {
+
+                        $query = "SELECT * from sessional_awards WHERE enroll =".$id;
+
+                        $res = $conn -> query($query);
 
 
-                //if ($changedData == 'yes') {
+                        $result = array();
 
 
-            
-                   // $replace_sql = "UPDATE tiles SET tile_on_left = 'no' WHERE tile_on_left = 'yes' ";
-
-                    //if ($conn->query($replace_sql) === TRUE) {
-
-                        $sql = "UPDATE sessional_awards SET ". $column."='".$changedData."' WHERE enroll=".$id;
-
-                        if ($conn->query($sql) === TRUE) {
-
-                            $query = "SELECT * from sessional_awards WHERE enroll =".$id;
-
-                            $res = $conn -> query($query);
-
-
-                            $result = array();
-
-
-                            while ($row = $res -> fetch_assoc()) {
-                                # code...
-                                $result[] = $row;
-
-                            }
-
-                            print('{"data":'.json_encode($result).'}');
-                        } else {
-                            echo '{"fieldErrors":[{"name":"'.$column.'","status":"failed to updated."}],"data":[]}';
-                            }
-
-                    
-                //}
-                //else{
-
-                  //   echo '{"fieldErrors":[{"name":"tile_on_left","status":"Please select correct option"}],"data":[]}';
-
-                //}
-
-            /*}else{
-
-                $sql = "UPDATE tiles SET ".$column."='".mysqli_real_escape_string($conn,$changedData)."' WHERE tile_id=".$id;
-
-
-                if ($conn->query($sql) === TRUE) {
-
-                    $query = "SELECT * from tiles WHERE tile_id=".$id;
-
-                    $res = $conn -> query($query);
-
-
-                    $result = array();
-
-
-                    while ($row = $res -> fetch_assoc()) {
-                        # code...
+                        while ($row = $res -> fetch_assoc()) 
+                        {
+                            
                         $result[] = $row;
 
-                    }
+                        }
 
-                    print('{"data":'.json_encode($result).'}');
+                            print('{"data":'.json_encode($result).'}');
+                        }
+                         else 
+                         {
+                            echo '{"fieldErrors":[{"name":"'.$column.'","status":"failed to updated."}],"data":[]}';
+                         }
 
-
-                } else {
-                    echo '{"fieldErrors":[{"name":"'.$column.'","status":"failed to updated."}],"data":[]}';
-                }
-
-            }*/
-        }else if($_POST['action'] == "create")
+                    
+           
+        }
+        else if($_POST['action'] == "create")
         {
 
             $data = $_POST['data'][0];
@@ -157,12 +119,12 @@
 
 
 
-            $sql = "INSERT INTO sessional_awards (enroll, name, semester, sessional, marks_sub1, marks_sub2, marks_sub3, marks_sub4, marks_sub5, marks_sub6, total_marks) VALUES ('$enroll', '$name', '$semester', '$sessional', '$marks_sub1', '$marks_sub2', '$marks_sub3', '$marks_sub4', $marks_sub5, $marks_sub6, $total_marks )";
+            $sql = "INSERT INTO sessional_awards (,enroll, name, semester, sessional, marks_sub1, marks_sub2, marks_sub3, marks_sub4, marks_sub5, marks_sub6, total_marks) VALUES ('$enroll', '$name', '$semester', '$sessional', '$marks_sub1', '$marks_sub2', '$marks_sub3', '$marks_sub4', $marks_sub5, $marks_sub6, $total_marks )";
 
 
-            if ($conn->query($sql) === TRUE) {
-
-                $query = "SELECT * from sessional_awards WHERE enroll = $enroll";
+            if ($conn->query($sql) === TRUE) 
+            {
+                $query = "SELECT * from sessional_awards WHERE enroll = '$enroll' ";
 
 
                 $res = $conn -> query($query);
@@ -170,36 +132,77 @@
                 $result = array();
 
 
-                while ($row = $res -> fetch_assoc()) {
+                while ($row = $res -> fetch_assoc()) 
+                    {
+                    # code...
+                    $result[] = $row;
+
+                    }
+
+                print('{"data":'.json_encode($result).'}');
+            }    
+           
+        }  
+        else if ($_POST['action'] == "remove")
+        {
+
+            $data = $_POST['data'];
+
+            $id = array_keys($data);
+    
+            $id = array_shift($id);
+
+            $delete_sql = "DELETE FROM sessional_awards WHERE enroll = '$id'";
+
+            if ($conn->query($delete_sql) === TRUE)
+             {
+
+                $query = "SELECT * from sessional_awards";
+
+                $res = $conn -> query($query);
+
+
+                $result = array();
+
+
+                while ($row = $res -> fetch_assoc()) 
+                {
                     # code...
                     $result[] = $row;
 
                 }
 
                 print('{"data":'.json_encode($result).'}');
-            }    
-           
+
+
+            }
         }
-    }    
+          
+
+
+    }
     else
     {
 
-        $query = "SELECT * from sessional_awards";
-        $res = $conn -> query($query);
+            $query = "SELECT * from sessional_awards";
+            $res = $conn -> query($query);
 
 
-        $result = array();
+            $result = array();
 
 
-        while ($row = $res -> fetch_assoc()) {
-            # code...
+            while ($row = $res -> fetch_assoc()) 
+            {
+            
             $result[] = $row;
 
-        }
-    }
+            }
+    
         print('{"data":'.json_encode($result).'}');
+    }
 
-
+    
         $conn->close();
 
 ?>
+
