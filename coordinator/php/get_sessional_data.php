@@ -128,21 +128,18 @@
                 }
 
             }*/
-        }
+        }else if($_POST['action'] == "create")
+        {
 
-    }else if($_POST['action'] == "create"){
-
-         $data = $_POST['data'][0];
+            $data = $_POST['data'][0];
 
             $enroll = $data['enroll'];
 
             $name = $data['name'];
 
-            $course = $data['course'];
-
             $semester = $data['semester'];
 
-            $section = $data['section'];
+            $sessional = $data['sessional'];
 
             $marks_sub1 = $data['marks_sub1'];
 
@@ -156,16 +153,16 @@
 
             $marks_sub6 = $data['marks_sub6'];
 
-            $total_marks = $data['total_marks'];
+            $total_marks = ($marks_sub1 + $marks_sub2 + $marks_sub3 + $marks_sub4 + $marks_sub5 + $marks_sub6);
 
 
 
-            $sql = "INSERT INTO sessional_awards (enroll, name, course, semester, section, address, email, reg_no, batch, reg_status) VALUES ('$enroll', '$name', '$course', '$semester', '$section', '$address', '$email', '$reg_no', '$batch', '$reg_status')";
+            $sql = "INSERT INTO sessional_awards (enroll, name, semester, sessional, marks_sub1, marks_sub2, marks_sub3, marks_sub4, marks_sub5, marks_sub6, total_marks) VALUES ('$enroll', '$name', '$semester', '$sessional', '$marks_sub1', '$marks_sub2', '$marks_sub3', '$marks_sub4', $marks_sub5, $marks_sub6, $total_marks )";
 
 
             if ($conn->query($sql) === TRUE) {
 
-                $query = "SELECT * from teacher_profile WHERE teacher_id = $teacher_id";
+                $query = "SELECT * from sessional_awards WHERE enroll = $enroll";
 
 
                 $res = $conn -> query($query);
@@ -181,44 +178,9 @@
 
                 print('{"data":'.json_encode($result).'}');
             }    
-            else
-            {
-                echo '{"fieldErrors":[{"name":"coordinating_course","status":"Please select different."},{"name":"coordinating_sec","status":"Please select different."},{"name":"coordinating_sem","status":"Please select different."}],"data":[]}';
-            }    
+           
         }
-        else if ($_POST['action'] == "remove")
-        {
-
-            $data = $_POST['data'];
-
-            $id = array_keys($data);
-    
-            $id = array_shift($id);
-
-            $delete_sql = "UPDATE teacher_profile SET type = 'normal', coordinating_course = NULL,  coordinating_sem = NULL,  coordinating_sec = NULL WHERE teacher_id = $id";
-
-            if ($conn->query($delete_sql) === TRUE) {
-
-                $query = "SELECT * from teacher_profile";
-
-                $res = $conn -> query($query);
-
-
-                $result = array();
-
-
-                while ($row = $res -> fetch_assoc()) {
-                    # code...
-                    $result[] = $row;
-
-                }
-
-                print('{"data":'.json_encode($result).'}');
-
-
-            }
-
-        }
+    }    
     else
     {
 
@@ -234,9 +196,9 @@
             $result[] = $row;
 
         }
-    
-        print('{"data":'.json_encode($result).'}');
     }
+        print('{"data":'.json_encode($result).'}');
+
 
         $conn->close();
 

@@ -250,6 +250,7 @@
                           <th>ENROLL</th>
                           <th>NAME</th>
                           <th>SEMESTER</th>
+                          <th>SESSIONAL</th>
                           <th>MARKS SUB1</th>
                           <th>MARKS SUB2</th>
                           <th>MARKS SUB3</th>
@@ -284,6 +285,7 @@
                           <th>SUBJECT CODE</th>
                           <th>SUBJECT NAME</th>
                           <th>SEMESTER</th>
+                          <th>COURSE</th>
                           <th>TEACHER</th>
                           <th>TOTAL CLASSES</th>
                         </tr>
@@ -914,11 +916,19 @@
                       name: "name",
                       type: "text"
                   }, 
+
                   {
                       label: "SEMESTER:",
                       name: "semester",
                       type: "text"
-                  }, 
+                  },
+
+                   {
+                      label: "SESSIONAL:",
+                      name: "sessional",
+                      type: "text"
+                  },
+  
                   {
                       label: "MARKS SUB1:",
                       name: "marks_sub1",
@@ -949,11 +959,7 @@
                       name: "marks_sub6",
                       type: "text"
                   },
-                  {
-                      label: "TOTAL MARKS:",
-                      name: "total_marks",
-                      type: "text"
-                  },
+                 
                       ]
           } );
 
@@ -966,14 +972,22 @@
                     data: "enroll", 
                     
                   },
+
                   { 
                     data: "name",
                     className: 'editable'
                   },
+
                   { 
                     data: "semester", 
                     className: 'editable'
                   },
+
+                   { 
+                    data: "sessional", 
+                    className: 'editable'
+                  },
+
                   
                   { 
                     data: "marks_sub1",
@@ -1002,7 +1016,7 @@
                   },
                   { 
                     data: "total_marks",
-                    className: 'editable'
+                    
                   },
 
 
@@ -1042,13 +1056,14 @@
 
                var name = sessional_editor.field( 'name' );
                var semester = sessional_editor.field( 'semester' );
+               var sessional = sessional_editor.field( 'sessional' );
                var marks_sub1 = sessional_editor.field( 'marks_sub1' );
                var marks_sub2 = sessional_editor.field( 'marks_sub2' );
                var marks_sub3 = sessional_editor.field( 'marks_sub3' );
                var marks_sub4 = sessional_editor.field( 'marks_sub4' );
                var marks_sub5 = sessional_editor.field( 'marks_sub5' );
                var marks_sub6 = sessional_editor.field( 'marks_sub6' );
-               var total_marks = sessional_editor.field( 'total_marks' );
+               
                 
                 
                 // Only validate user input values - different values indicate that
@@ -1062,6 +1077,12 @@
               if ( ! semester.isMultiValue() ) {
                   if ( ! semester.val() ) {
                      semester.error( 'Value is required' );
+                   }
+              }
+
+              if ( ! sessional.isMultiValue() ) {
+                  if ( ! sessional.val() ) {
+                     sessional.error( 'Value is required' );
                    }
               }
 
@@ -1101,11 +1122,7 @@
                    }
               }
 
-               if ( ! total_marks.isMultiValue() ) {
-                  if ( ! total_marks.val() ) {
-                     total_marks.error( 'Value is required' );
-                   }
-              }
+              
 
                
 
@@ -1146,6 +1163,11 @@
                       type: "text"
                   }, 
                   {
+                      label: "COURSE:",
+                      name: "course",
+                      type: "text"
+                  }, 
+                  {
                       label: "TEACHER:",
                       name: "teacher",
                       type: "text"
@@ -1175,6 +1197,12 @@
                     data: "semester", 
                     className: 'editable'
                   },
+
+                   { 
+                    data: "course", 
+                    className: 'editable'
+                  },
+                  
                   
                   { 
                     data: "teacher",
@@ -1218,6 +1246,7 @@
 
               var subject_name = classroutine_editor.field( 'subject_name' );
               var semester = classroutine_editor.field( 'semester' );
+              var course = classroutine_editor.field( 'course' );
               var teacher = classroutine_editor.field( 'teacher' );
               var total_classes = classroutine_editor.field( 'total_classes' );
                 
@@ -1234,6 +1263,13 @@
                        semester.error( 'Value is required' );
                      }
                  }
+
+                 if ( ! course.isMultiValue() ) {
+                   if ( ! course.val() ) {
+                       course.error( 'Value is required' );
+                     }
+                 }
+
 
                  if ( ! teacher.isMultiValue() ) {
                    if ( ! teacher.val() ) {
