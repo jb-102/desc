@@ -276,14 +276,15 @@
                         <tr>
                           <th>ENROLL</th>
                           <th>NAME</th>
-                          <th>SEMESTER</th>
                           <th>COURSE</th>
+                          <th>SEMESTER</th>
+                          <th>SECTION</th>
                           <th>ADDRESS</th>
                           <th>PHONE</th>
                           <th>EMAIL</th>
+                          <th>REG STATUS</th>
                           <th>REG NO</th>
                           <th>BATCH</th>
-                          <th>REG STATUS</th>
                         </tr>
                       </thead>
                     </table>  
@@ -401,6 +402,7 @@
     $("#faculty_div").slideUp();
     $("#student_div").slideUp();
     $("#grevience_div").slideUp();
+    coordinator_datatable.ajax.reload();
   });
 
   $("#faculty_nav").click(function(){
@@ -412,6 +414,7 @@
     $("#faculty_div").slideDown();
     $("#student_div").slideUp();
     $("#grevience_div").slideUp();
+    faculty_datatable.ajax.reload();
   });
 
   $("#student_nav").click(function(){
@@ -423,6 +426,7 @@
     $("#faculty_div").slideUp();
     $("#student_div").slideDown();
     $("#grevience_div").slideUp();
+    student_datatable.ajax.reload();
   });  
 
   $("#greviences_nav").click(function(){
@@ -434,6 +438,7 @@
     $("#faculty_div").slideUp();
     $("#student_div").slideUp();
     $("#grevience_div").slideDown();
+    greveince_datatable.ajax.reload();
   });  
 
 </script>
@@ -450,7 +455,7 @@
 <!-- Datatables -->
 <script>
 
-  var coordinator_editor,faculty_editor,grevience_editor,student_editor;
+  var coordinator_editor,faculty_editor,grevience_editor,student_editor,coordinator_datatable,faculty_datatable,greveince_datatable,student_datatable;
 
   $(document).ready(function() {
 
@@ -527,7 +532,7 @@
 
           } );
 
-          $('#coordinator_datatable-responsive').DataTable({
+          coordinator_datatable = $('#coordinator_datatable-responsive').DataTable({
               dom: "Bfrtip",
               ajax: "./php/get_coordinator_data.php",
               columns: [
@@ -662,13 +667,13 @@
                 }, {
                     label: "D.O.J:",
                     name: "date_of_joining",
-                    type: "text"
+                    type: "datetime"
                 }
             ]
         } );
 
 
-      $('#faculty_datatable-responsive').DataTable({
+      faculty_datatable = $('#faculty_datatable-responsive').DataTable({
           dom: "Bfrtip",
           ajax: "./php/get_faculty_data.php",
           columns: [
@@ -710,10 +715,15 @@
               columns: ':not(:first-child)',
               keys: [ 9 ]
           },
+          select: {
+            style:    'os',
+            selector: 'td:first-child'
+          },
           responsive: true,
-          buttons: [
-            { extend:"create", editor:faculty_editor }
-          ]
+            buttons: [
+              { extend:"create", editor:faculty_editor },
+              { extend:"remove", editor:faculty_editor }
+            ]
       });
 
 
@@ -815,15 +825,29 @@
                       type: "text"
                   }, 
                   {
-                      label: "SEMESTER:",
-                      name: "semester",
-                      type: "text"
-                  },  
-                  {
                       label: "COURSE:",
                       name: "course", 
-                      type: "text"
+                      type: "select",
+                      options: [
+                        { label: "BE", value: "BE" },
+                        { label: "DIPLOMA", value: "DIPLOMA" }
+                      ]
                   },
+                  {
+                      label: "SEMESTER:",
+                      name: "semester",
+                      type: "select",
+                      options: []
+                  },  
+                  {
+                      label: "SECTION:",
+                      name: "section",
+                      type: "select",
+                      options: [
+                        { label: "A", value: "A" },
+                        { label: "B", value: "B" }
+                      ]
+                  }, 
                   {
                       label: "ADDRESS:",
                       name: "address",
@@ -862,7 +886,7 @@
           } );
 
 
-          $('#students_datatable-responsive').DataTable({
+          student_datatable = $('#students_datatable-responsive').DataTable({
               dom: "Bfrtip",
               ajax: "./php/get_students_data.php",
               columns: [
@@ -870,17 +894,24 @@
                     data: "enroll", 
                     
                   },
+
                   { 
                     data: "name",
                     className: 'editable'
                   },
+
+                  { 
+                    data: "course",
+                    className: 'editable'
+                  },
+
                   { 
                     data: "semester", 
                     className: 'editable'
                   },
-                  
+
                   { 
-                    data: "course",
+                    data: "section", 
                     className: 'editable'
                   },
 
@@ -900,32 +931,50 @@
                   },
                   
                   { 
-                    data: "reg_no",
+                    data: "reg_status",
                     className: 'editable'
+                  },
+
+                  { 
+                    data: "reg_no",
                   },
 
                   { 
                     data: "batch",
-                    className: 'editable'
-                  },
-
-                  { 
-                    data: "reg_status",
-                    className: 'editable'
                   }
 
               ],
               order: [ 0, 'asc' ],
               keys: {
-                  columns: ':not(:first-child)',
+                  columns: [1,2,3,4,5,6,7,8],
                   keys: [ 9 ]
               },
+              select: {
+                style:    'os',
+                selector: 'td:first-child'
+              },
               responsive: true,
-              buttons: [
-                
-              ]
+                buttons: [
+                  { extend:"create", editor:student_editor },
+                  { extend:"remove", editor:student_editor }
+                ]
           });
 
+
+          student_editor.dependent( 'course', function ( val ) {
+              
+              if (val === 'BE') 
+              {
+                student_editor.field('semester').update([{ label: "1st", value: "1" },{ label: "2nd", value: "2" },{ label: "3rd", value: "3" },{ label: "4th", value: "4" },{ label: "5th", value: "5" },{ label: "6th", value: "6" },{ label: "7th", value: "7" },{ label: "8th", value: "8" }]);
+              }
+              else
+              {
+                student_editor.field('semester').update([{ label: "1st", value: "1" },{ label: "2nd", value: "2" },{ label: "3rd", value: "3" },{ label: "4th", value: "4" },{ label: "5th", value: "5" },{ label: "6th", value: "6" }]);
+              }
+
+              return true;
+
+          } );
 
           $('#students_datatable-responsive').on( 'click', 'tbody td.editable', function (e) {
               student_editor.inline( this, {
@@ -939,98 +988,97 @@
               });
           } );
 
-          // faculty_editor.on( 'preSubmit', function ( e, o, action ) {
+          student_editor.on( 'preSubmit', function ( e, o, action ) {
 
-          //   if ( action !== 'remove' ) {
+            if ( action !== 'remove' ) {
 
-          //       var enroll = faculty_editor.field( 'enroll' );
-          //       var name = faculty_editor.field( 'name' );
-          //       var semester = faculty_editor.field( 'semester' );
-          //       var course = faculty_editor.field( 'course' );
-          //       var address = faculty_editor.field( 'address' );
-          //       var contact_no = faculty_editor.field( 'contact_no' );
-          //       var email = faculty_editor.field( 'email' );
-          //       var reg_no = faculty_editor.field( 'reg_no' );
-          //       var batch = faculty_editor.field( 'batch' );
+                var enroll = student_editor.field( 'enroll' );
+                var name = student_editor.field( 'name' );
+                var semester = student_editor.field( 'semester' );
+                var course = student_editor.field( 'course' );
+                var address = student_editor.field( 'address' );
+                var contact_no = student_editor.field( 'contact_no' );
+                var email = student_editor.field( 'email' );
+                var reg_no = student_editor.field( 'reg_no' );
+                var batch = student_editor.field( 'batch' );
 
-          //       // Only validate user input values - different values indicate that
-          //       // the end user has not entered a value
+                // Only validate user input values - different values indicate that
+                // the end user has not entered a value
     
-          //       if ( ! enroll.isMultiValue() ) {
-          //           if ( ! enroll.val() ) {
-          //               enroll.error( 'Value is required' );
-          //           }
-          //       }
+                if ( ! enroll.isMultiValue() ) {
+                    if ( ! enroll.val() ) {
+                        enroll.error( 'Value is required' );
+                    }
+                }
 
-          //       if ( ! name.isMultiValue() ) {
-          //           if ( ! name.val() ) {
-          //               name.error( 'Value is required' );
-          //           }
-          //       }
+                if ( ! name.isMultiValue() ) {
+                    if ( ! name.val() ) {
+                        name.error( 'Value is required' );
+                    }
+                }
 
-          //       if ( ! semester.isMultiValue() ) {
-          //           if ( ! semester.val() ) {
-          //               semester.error( 'Value is required' );
-          //           }
-          //       }
+                if ( ! semester.isMultiValue() ) {
+                    if ( ! semester.val() ) {
+                        semester.error( 'Value is required' );
+                    }
+                }
 
-          //       if ( ! course.isMultiValue() ) {
-          //           if ( ! course.val() ) {
-          //               course.error( 'Value is required' );
-          //           }
-          //       }
+                if ( ! course.isMultiValue() ) {
+                    if ( ! course.val() ) {
+                        course.error( 'Value is required' );
+                    }
+                }
 
-          //       if ( ! address.isMultiValue() ) {
-          //           if ( ! address.val() ) {
-          //               address.error( 'Value is required' );
-          //           }
-          //       }
+                if ( ! address.isMultiValue() ) {
+                    if ( ! address.val() ) {
+                        address.error( 'Value is required' );
+                    }
+                }
 
-          //       if ( ! contact_no.isMultiValue() ) {
-          //           if ( ! contact_no.val() ) {
-          //               contact_no.error( 'Value is required' );
-          //           }
-          //       }
+                if ( ! contact_no.isMultiValue() ) {
+                    if ( ! contact_no.val() ) {
+                        contact_no.error( 'Value is required' );
+                    }
+                }
 
-          //       if ( ! email.isMultiValue() ) {
-          //           if ( ! email.val() ) {
-          //               email.error( 'Value is required' );
-          //           }
-          //       }
+                if ( ! email.isMultiValue() ) {
+                    if ( ! email.val() ) {
+                        email.error( 'Value is required' );
+                    }
+                }
 
-          //       if ( ! reg_no.isMultiValue() ) {
-          //           if ( ! reg_no.val() ) {
-          //               reg_no.error( 'Value is required' );
-          //           }
-          //       }
+                if ( ! reg_no.isMultiValue() ) {
+                    if ( ! reg_no.val() ) {
+                        reg_no.error( 'Value is required' );
+                    }
+                }
 
-          //       if ( ! batch.isMultiValue() ) {
-          //           if ( ! batch.val() ) {
-          //               batch.error( 'Value is required' );
-          //           }
-          //       }
+                if ( ! batch.isMultiValue() ) {
+                    if ( ! batch.val() ) {
+                        batch.error( 'Value is required' );
+                    }
+                }
 
 
-          //       // ... additional validation rules
+                // ... additional validation rules
      
-          //       // If any error was reported, cancel the submission so it can be corrected
-          //       if ( this.inError() ) {
-          //           return false;
-          //       }
-          //   }
+                // If any error was reported, cancel the submission so it can be corrected
+                if ( this.inError() ) {
+                    return false;
+                }
+            }
 
-          // } );
+          } );
     }
 
     {
 
-          $('#grevience_datatable-responsive').DataTable({
+          greveince_datatable = $('#grevience_datatable-responsive').DataTable({
               dom: "Bfrtip",
               ajax: "./php/get_grevience_data.php",
               columns: [
                   { 
                     data: "grevience_id", 
-                    
                   },
                   { 
                     data: "grevience_subject",
@@ -1045,7 +1093,6 @@
                 
               ]
           });
-
     }
 
     
@@ -1056,103 +1103,7 @@
 
 
 
-
-<!-- <script>
-  var notice = new PNotify({ title: 'Regular Success', text: 'Data Entered Successfully!', type: 'success', styling: 'bootstrap3'});
-</script> -->
-
-
   </body>
-
-
-  <?php 
-
-
-  if (isset($_POST['submit_card_details'])) {
-               
-      $target_dir = "./images/";
-      $base_path = "";
-      
-      // saving and retrieving image path from database
-      $target_path = $base_path . basename($_FILES['card_image']['name']); 
-      $target_file = $target_dir . basename($_FILES['card_image']['name']);
-      
-      
-      $query = "INSERT into cards (card_name,card_price,card_category,card_description,card_image) "
-      . "VALUES ('{$_POST['card_name']}','{$_POST['card_price']}','{$_POST['card_category']}','{$_POST['card_description']}','{$target_path}')";
-     
-      if (move_uploaded_file($_FILES["card_image"]["tmp_name"], $target_file)) {
-      if ($conn->query($query) === TRUE){
-
-          if (stock($_POST['card_category'])) {
-            # code...
-
-            echo "<script>alert('Data has been inserted successfully.');</script>";
-
-          }
-          else
-          {
-            echo "<script>alert('some error');</script>";
-          }
-
-      
-        } 
-      // else{
-      //        echo "--------------------------------------------Some error occured" . "Error: " . $query ." -------  ". $conn->error;
-      //     }
-      } else {
-      echo "<script>alert('Sorry, there was an error uploading your file.');</script>";
-          }
-      $conn->close();     
-    
-  }
-
-
-  function stock($card_category)
-  {
-
-    $res =  $GLOBALS['conn']  -> query("SELECT stock from category WHERE category_name = '$card_category'");
-    $count = 0;
-    while ($row = $res -> fetch_assoc()) {
-        # code...
-        $count = $row['stock'] + 1;
-    }
-
-    $chk = $GLOBALS['conn'] -> query("UPDATE category SET stock='$count' WHERE  category_name = '$card_category'");
-
-    return $chk;
-  }
-
-
-  if (isset($_POST['submit_testimonial_details'])) {              
-               
-    $target_dir = "./images/";
-    $base_path = "";
-    
-    // saving and retrieving image path from database
-    $target_path = $base_path . basename($_FILES['customer_image']['name']); 
-    $target_file = $target_dir . basename($_FILES['customer_image']['name']);
-    
-    
-    $query = "INSERT into testimonials (customer_name,customer_message,customer_image) "
-    . "VALUES ('{$_POST['customer_name']}','{$_POST['customer_message']}','{$target_path}')";
-   
-    if (move_uploaded_file($_FILES["customer_image"]["tmp_name"], $target_file)) {
-    if ($conn->query($query) === TRUE){
-    echo "<script>alert('data successfully entered')</script>";
-        } 
-    else{
-           echo "--------------------------------------------Some error occured" . "Error: " . $query ." -------  ". $conn->error;
-        }
-    } else {
-    echo "<script>alert('Sorry, there was an error uploading your file.');</script>";
-        }
-    $conn->close();     
-    
-  }
-
-?>
-
 
 
 </html>

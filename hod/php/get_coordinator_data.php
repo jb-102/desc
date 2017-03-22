@@ -6,7 +6,6 @@
     if (isset($_POST['action'])) {
 
 
-        # code...
         if ($_POST['action'] == "edit") {
             # code...
 
@@ -124,13 +123,11 @@
 
 
             }
-
         }
         
 
     }else
     {
-
 
         $query = "SELECT teacher_id,teacher_name,coordinating_course,coordinating_sec,coordinating_sem from teacher_profile WHERE type = 'coordinator'";
 
